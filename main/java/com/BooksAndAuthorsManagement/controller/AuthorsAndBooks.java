@@ -1,7 +1,6 @@
 package com.BooksAndAuthorsManagement.controller;
 
 
-import com.BooksAndAuthorsManagement.BooksAndAuthorsManagementApplication;
 import com.BooksAndAuthorsManagement.model.Author;
 import com.BooksAndAuthorsManagement.model.Book;
 import org.springframework.http.HttpStatus;
@@ -13,47 +12,85 @@ import java.util.*;
 @RestController
 @RequestMapping("/books-authors/v1")
 public class AuthorsAndBooks {
-    Map<String,Book> books = new HashMap<>();
+    Map<String,Book> bookMap = new HashMap<>();
+    Map<String , Author> authorMap = new HashMap<>();
     @GetMapping("/greet")
     public String greet(){
         return "Hello, this is my books and Authors api service";
     }
     @GetMapping("/books/bookId")
-    ResponseEntity<Book> getABook(@PathVariable String bookId){
-        if(books.containsKey(bookId)){
-            return ResponseEntity.ok(books.get(bookId));
+    public ResponseEntity<Book> getABook(@PathVariable String bookId){
+        if(bookMap.containsKey(bookId)){
+            return ResponseEntity.ok(bookMap.get(bookId));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+    @GetMapping("/authors")
+    public ResponseEntity<ArrayList<Author>> getAllAuthors(@RequestParam(value = "authorName",required = false) String authorName){
+        if(authorName == null || authorName.equals("")){
+            ArrayList<Author> allAuthors = new ArrayList<>(authorMap.values());
+            return ResponseEntity.ok(allAuthors);
+        }else{
+            boolean isAuthorExist = false;
+            ArrayList<Author> specificAuthors = new ArrayList<>();
+            for(Author author: authorMap.values()){
+                if(author.getAuthorName().equals(authorName)){
+                    specificAuthors.add(author);
+                    isAuthorExist = true;
+                }
+            }
+            if(isAuthorExist == true) return ResponseEntity.ok(specificAuthors);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+
+    }
     @GetMapping("/books")
-    ResponseEntity<ArrayList<Book>> getAllBooks(){
-        return  ResponseEntity.ok(new ArrayList(books.values()));
+    public ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName",required = false) String bookName){
+        if(bookName == null || bookName.equals("")){
+            ArrayList<Book> allBooks = new ArrayList<>(bookMap.values());
+            return  ResponseEntity.ok(allBooks);
+        } else{
+            boolean isBookPresent = false;
+            ArrayList<Book> specificBooks = new ArrayList<>();
+            for(Book book : bookMap.values()){
+                if(book.getBookName().equals(bookName)){
+                    specificBooks.add(book);
+                    isBookPresent = true;
+                }
+            }
+            if(isBookPresent == true) return ResponseEntity.ok(specificBooks);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+
     }
     @PostMapping("/books")
-    ResponseEntity<Book> postBook(@RequestBody Book book){
-        if(book.getBookId() == null || books.containsKey(book.getBookId())){
+    public ResponseEntity<Book> postBook(@RequestBody Book book){
+        if(book.getBookId() == null || bookMap.containsKey(book.getBookId())){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        books.put(book.getBookId(),book);
+        bookMap.put(book.getBookId(),book);
+        authorMap.put(book.getAuthor().getAuthorId(),book.getAuthor());
         return ResponseEntity.ok(book);
     }
     @PutMapping("/books/{bookId}")
-    ResponseEntity<Book> updateBook(@RequestBody Book book){
-        if(books.containsKey(book.getBookId())){
-            Book update = books.get(book.getBookId());
+    public ResponseEntity<Book> updateBook(@RequestBody Book book){
+        if(bookMap.containsKey(book.getBookId())){
+            Book update = bookMap.get(book.getBookId());
             update.setBookName(book.getBookName());
             update.setAuthor(book.getAuthor());
             update.setNumberOfPages(book.getNumberOfPages());
-            books.put(book.getBookId(),update);
+            bookMap.put(book.getBookId(),update);
             return ResponseEntity.ok(update);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
     @DeleteMapping("/books/{bookId}")
-    ResponseEntity<Boolean> deleteBook(@PathVariable String bookId){
-        if(books.containsKey(bookId)){
-            books.remove(bookId);
+    public ResponseEntity<Boolean> deleteBook(@PathVariable String bookId){
+        if(bookMap.containsKey(bookId)){
+            bookMap.remove(bookId);
             return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
