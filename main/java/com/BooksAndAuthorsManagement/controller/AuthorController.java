@@ -14,10 +14,10 @@ import java.util.*;
 public class AuthorsAndBooks {
     Map<String,Book> bookMap = new HashMap<>();
     Map<String , Author> authorMap = new HashMap<>();
-    @GetMapping("/greet")
-    public String greet(){
-        return "Hello, this is my books and Authors api service";
-    }
+//    @GetMapping("/greet")
+//    public String greet(){
+//        return "Hello, this is my books and Authors api service";
+//    }
     @GetMapping("/books/bookId")
     public ResponseEntity<Book> getABook(@PathVariable String bookId){
         if(bookMap.containsKey(bookId)){
@@ -68,10 +68,11 @@ public class AuthorsAndBooks {
     @PostMapping("/books")
     public ResponseEntity<Book> postBook(@RequestBody Book book){
         if(book.getBookId() == null || bookMap.containsKey(book.getBookId())){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         bookMap.put(book.getBookId(),book);
         authorMap.put(book.getAuthor().getAuthorId(),book.getAuthor());
+        //check for author validations
         return ResponseEntity.ok(book);
     }
     @PutMapping("/books/{bookId}")
