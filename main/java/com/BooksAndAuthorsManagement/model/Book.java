@@ -4,26 +4,23 @@ import com.BooksAndAuthorsManagement.model.Author;
 public class Book {
     private  String bookName;
     private String bookId;
-    private Author author;
-
+    private String authorId;
     private int numberOfPages;
-    public Book(String bookName, String bookId, int numberOfPages, Author author) {
-        this.bookName = bookName;
-        this.bookId = bookId;
+
+    public Book(String name, String id, int numberOfPages, String authorId) {
+        this.bookName = name;
+        this.bookId = id;
         this.numberOfPages = numberOfPages;
-        this.author = author;
+        this.authorId = authorId;
+    }
+    public String getAuthorId() {
+        return authorId;
     }
 
-    public void setAuthor(Author author) {
-        this.author = author;
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
     }
 
-    public Author getAuthor() {
-        return author;
-    }
-
-    public Book() {
-    }
     public String getBookName() {
         return bookName;
     }

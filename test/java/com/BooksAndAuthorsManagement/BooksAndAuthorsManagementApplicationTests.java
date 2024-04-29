@@ -1,101 +1,103 @@
 package com.BooksAndAuthorsManagement;
-import com.BooksAndAuthorsManagement.controller.AuthorsAndBooks;
+import com.BooksAndAuthorsManagement.controller.AuthorController;
+import com.BooksAndAuthorsManagement.controller.BookController;
 import com.BooksAndAuthorsManagement.model.Author;
 import com.BooksAndAuthorsManagement.model.Book;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import java.util.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class BooksAndAuthorsManagementApplicationTests {
-	Author author = new Author("sai","A1");
-	AuthorsAndBooks authorsAndBooks = new AuthorsAndBooks();
-	ResponseEntity<Book> newBook = authorsAndBooks.postBook(new  Book("Hell","B1",10,author));
+	AuthorController authorController = new AuthorController();
+	BookController BookController = new BookController();
 
 	@Test
-	public void testGetAllBooks_ReturnsOkStatus() {
-		ResponseEntity<Book> book1  = authorsAndBooks.postBook(new Book("Heaven","B2",15,author));
-		ResponseEntity<Book> book2  = authorsAndBooks.postBook(new Book("Dream","B3",20,author));
-		ResponseEntity<ArrayList<Book>> response = authorsAndBooks.getAllBooks("Heaven");
+	public void testGetAllBooksReturnsOkStatus() {
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> book2  = BookController.postBook(new Book("Dream","B3",20,"A2"));
+		ResponseEntity<ArrayList<Book>> response = BookController.getAllBooks("Heaven");
 		assertEquals(response.getStatusCode(), HttpStatus.OK);
 	}
 	@Test
-	public void testGetAllBooks_ReturnsNotFoundStatus() {
-		ResponseEntity<Book> book2  = authorsAndBooks.postBook(new Book("Dream","B3",20,author));
-		ResponseEntity<ArrayList<Book>> response = authorsAndBooks.getAllBooks("done");
+	public void testGetAllBooksReturnsNotFoundStatus() {
+		ResponseEntity<Book> book2  = BookController.postBook(new Book("Dream","B3",20,"A1"));
+		ResponseEntity<ArrayList<Book>> response = BookController.getAllBooks("done");
 		assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
 	}
 	@Test
-	public void testGetAllBooks_ReturnsValidSizeOfBooks() {
-		ResponseEntity<Book> book1  = authorsAndBooks.postBook(new Book("Heaven","B2",15,author));
-		ResponseEntity<Book> book2  = authorsAndBooks.postBook(new Book("Heaven","B3",20,author));
-		ResponseEntity<ArrayList<Book>> response = authorsAndBooks.getAllBooks("Heaven");
+	public void testGetAllBooksReturnsValidSizeOfBooks() {
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> book2  = BookController.postBook(new Book("Heaven","B3",20,"A2"));
+		ResponseEntity<ArrayList<Book>> response = BookController.getAllBooks("Heaven");
 		assertEquals(response.getBody().size(), 2);
 	}
 	@Test
-	public void testGetAllBooks_ReturnsInvalidSizeOfBooks() {
-		ResponseEntity<Book> book1  = authorsAndBooks.postBook(new Book("Heaven","B2",15,author));
-		ResponseEntity<Book> book2  = authorsAndBooks.postBook(new Book("Heaven","B3",20,author));
-		ResponseEntity<ArrayList<Book>> response = authorsAndBooks.getAllBooks("Heaven");
+	public void testGetAllBooksReturnsInvalidSizeOfBooks() {
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> book2  = BookController.postBook(new Book("Heaven","B3",20,"A2"));
+		ResponseEntity<ArrayList<Book>> response = BookController.getAllBooks("Heaven");
 		assertNotEquals(response.getBody().size(),1 );
 	}
 
 	@Test
-	public void testGetABook_returnValidBook(){
-		ResponseEntity<Book> response = authorsAndBooks.getABook("B1");
-		assertEquals(response.getBody().getBookName(),"Hell");
+	public void testGetABookReturnValidBook(){
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> response = BookController.getABook("B2");
+		assertEquals(response.getBody().getBookName(),"Heaven");
 
 	}
 	@Test
-	public void testGetABook_returnNull(){
-		ResponseEntity<Book> response = authorsAndBooks.getABook("B2");
+	public void testGetABookReturnsNull(){
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> response = BookController.getABook("B1");
 		assertEquals(response.getBody(),null);
 
 	}
 	@Test
-	public void testGetABook_returnsOkStatusCode(){
-		ResponseEntity<Book> response = authorsAndBooks.getABook("B1");
+	public void testGetABookReturnsOkStatusCode(){
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> response = BookController.getABook("B2");
 		assertEquals(response.getStatusCode(),HttpStatus.OK);
 
 	}
 	@Test
-	public void testGetABook_returnsNotFoundStatusCode() {
-		ResponseEntity<Book> response = authorsAndBooks.getABook("B2");
+	public void testGetABookReturnsNotFoundStatusCode() {
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> response = BookController.getABook("B1");
 		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
 	}
 	@Test
-	public void testPutABook_returnsOkStatusCode(){
-		ResponseEntity<Book> book1  = authorsAndBooks.postBook(new Book("Heaven","B2",15,author));
-		ResponseEntity<Book> response = authorsAndBooks.updateBook(new Book("Hell","B2",20,author));
+	public void testPutABookReturnsOkStatusCode(){
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Book> response = BookController.updateBook(new Book("Hell","B2",20,"A2"));
 		assertEquals(response.getStatusCode(),HttpStatus.OK);
 	}
 
 	@Test
-	public void testDeleteBook_returnsOkStatus(){
-		ResponseEntity<Boolean> response = authorsAndBooks.deleteBook("B1");
+	public void testDeleteBookReturnsOkStatus(){
+		ResponseEntity<Boolean> response = BookController.deleteBook("B1");
 		assertEquals(response.getStatusCode(),HttpStatus.OK);
 	}
 	@Test
-	public void testDeleteBook_ReturnsNotFoundStatus(){
-		ResponseEntity<Boolean> response = authorsAndBooks.deleteBook("B2");
+	public void testDeleteBookReturnsNotFoundStatus(){
+		ResponseEntity<Book> book1  = BookController.postBook(new Book("Heaven","B2",15,"A1"));
+		ResponseEntity<Boolean> response = BookController.deleteBook("B1");
 		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
 	}
 	@Test
-	public void testGetAllAuthors_ReturnsOkStatus(){
-		ResponseEntity<ArrayList<Author>> response = authorsAndBooks.getAllAuthors("sai");
+	public void testGetAllAuthorsReturnsOkStatus(){
+		ResponseEntity<Author> author1  = AuthorController.postAuthor(new Author("sai","A1"));
+		ResponseEntity<ArrayList<Author>> response = AuthorController.getAllAuthors("sai");
 		assertEquals(response.getStatusCode(),HttpStatus.OK);
 	}
 	@Test
-	public void testGetAllAuthors_ReturnsNotFoundStatus(){
-		ResponseEntity<ArrayList<Author>> response = authorsAndBooks.getAllAuthors("charan");
+	public void testGetAllAuthorsReturnsNotFoundStatus(){
+		ResponseEntity<Author> author1  = AuthorController.postAuthor(new Author("sai","A1"));
+		ResponseEntity<ArrayList<Author>> response = AuthorController.getAllAuthors("charan");
 		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
 	}
 
