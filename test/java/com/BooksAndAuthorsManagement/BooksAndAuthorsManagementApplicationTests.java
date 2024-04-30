@@ -32,7 +32,7 @@ class BooksAndAuthorsManagementApplicationTests {
 	public void testGetAllBooksReturnsValidSizeOfBooks() {
 		ResponseEntity<Book> book1  = bookController.postBook(new Book("Heaven","B2",15,"A1"));
 		ResponseEntity<Book> book2  = bookController.postBook(new Book("Heaven","B3",20,"A2"));
-		ResponseEntity<ArrayList<Book>> response = BookController.getAllBooks("Heaven");
+		ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks("Heaven");
 		assertEquals(response.getBody().size(), 2);
 	}
 	@Test
@@ -79,7 +79,9 @@ class BooksAndAuthorsManagementApplicationTests {
 
 	@Test
 	public void testDeleteBookReturnsOkStatus(){
-		ResponseEntity<Boolean> response = bookController.deleteBook("B1");
+		ResponseEntity<Book> book1  = bookController.postBook(new Book("Heaven","B2",15,"A1"));
+
+		ResponseEntity<Boolean> response = bookController.deleteBook("B2");
 		assertEquals(response.getStatusCode(),HttpStatus.OK);
 	}
 	@Test
@@ -100,5 +102,4 @@ class BooksAndAuthorsManagementApplicationTests {
 		ResponseEntity<ArrayList<Author>> response = authorController.getAllAuthors("charan");
 		assertEquals(response.getStatusCode(),HttpStatus.NOT_FOUND);
 	}
-	git sa
 }

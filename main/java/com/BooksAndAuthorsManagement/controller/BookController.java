@@ -10,9 +10,9 @@ import java.util.*;
 @RequestMapping("/v1/books")
 
 public class BookController {
-    Map<String, Book> bookMap = new HashMap<>();
+    static Map<String, Book> bookMap = new HashMap<>();
 
-    @GetMapping("/bookId")
+    @GetMapping("/{bookId}")
     public ResponseEntity<Book> getABook(@PathVariable String bookId){
         if(bookMap.containsKey(bookId)){
             return ResponseEntity.ok(bookMap.get(bookId));
@@ -21,7 +21,7 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName",required = false) String bookName) {
+    public static ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName", required = false) String bookName) {
         if (bookName == null || bookName.equals("")) {
             ArrayList<Book> allBooks = new ArrayList<>(bookMap.values());
             return ResponseEntity.ok(allBooks);
