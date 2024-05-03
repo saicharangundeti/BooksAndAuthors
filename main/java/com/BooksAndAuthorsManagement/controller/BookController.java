@@ -1,6 +1,8 @@
 package com.BooksAndAuthorsManagement.controller;
 
+import com.BooksAndAuthorsManagement.Service.AuthorService;
 import com.BooksAndAuthorsManagement.Service.BookService;
+import com.BooksAndAuthorsManagement.model.Author;
 import com.BooksAndAuthorsManagement.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +15,11 @@ import java.util.*;
 
 public class BookController {
 
-    static BookService bookService = new BookService();
     @Autowired
-    public BookController(BookService bookService){
-        this.bookService = bookService;
-    }
+    private BookService bookService;
 
+    @Autowired
+    private AuthorService authorService;
 
     @GetMapping("/{bookId}")
     public ResponseEntity<Book> getABook(@PathVariable String bookId){
@@ -26,8 +27,9 @@ public class BookController {
         return ResponseEntity.ok(bookService.findBookById(bookId));
     }
 
+
     @GetMapping
-    public static ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName", required = false) String bookName) {
+    public ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName", required = false) String bookName) {
         if (bookName == null || bookName.equals("")) {
             return ResponseEntity.ok(bookService.findAllBooks());
         } else if(bookService.findAllBooksbyName(bookName).size() > 0){
@@ -35,11 +37,16 @@ public class BookController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
+
+
     @PostMapping
     public ResponseEntity<Book> postBook(@RequestBody Book book){
-        if(bookService.saveBook(book) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if(bookService.saveBook(book) == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok(book);
     }
+
+
     @PutMapping("/{bookId}")
     public ResponseEntity<Book> updateBook(@RequestBody Book book){
         if(bookService.updateBook(book) == null ) {
@@ -47,9 +54,11 @@ public class BookController {
         }
         return ResponseEntity.ok(bookService.updateBook(book));
     }
+
+
     @DeleteMapping("/{bookId}")
     public ResponseEntity<Boolean> deleteBook(@PathVariable String bookId){
-        if(bookService.removeBook(bookId) == true){
+        if(bookService.removeBook(bookId)){
             return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);

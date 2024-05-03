@@ -1,55 +1,35 @@
 package com.BooksAndAuthorsManagement.Service;
 
 import com.BooksAndAuthorsManagement.model.Book;
+import com.BooksAndAuthorsManagement.repo.BookRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+
+
 
 @Service
 public class BookService {
-    static Map<String, Book> bookMap = new HashMap<>();
+    @Autowired
+    private BookRepo bookRepo;
     public ArrayList<Book> findAllBooks(){
-        return new ArrayList<>(bookMap.values());
+        return bookRepo.findAllBooks();
     }
     public ArrayList<Book> findAllBooksbyName(String name){
-        ArrayList<Book> specBooks = new ArrayList<>();
-        for(Book book : bookMap.values()){
-            if(book.getBookName().equals(name)){
-                specBooks.add(book);
-            }
-        }
-        return specBooks;
+        return bookRepo.findAllBooksbyName(name);
     }
     public Book findBookById(String id){
-        if(bookMap.containsKey(id)){
-            return bookMap.get(id);
-        }
-        return null;
+        return bookRepo.getBook(id);
     }
     public Book saveBook(Book book){
-        if(bookMap.containsKey(book.getBookId())){
-            return null;
-        }
-        bookMap.put(book.getBookId(),book);
-        return book;
+        return bookRepo.addBook(book);
     }
     public Book updateBook(Book book){
-        if(bookMap.containsKey(book.getBookId())){
-            Book updateBook = bookMap.get(book.getBookId());
-            updateBook.setBookName(book.getBookName());
-            updateBook.setNumberOfPages(book.getNumberOfPages());
-            updateBook.setAuthorId(book.getAuthorId());
-            return updateBook;
-        }
-        return null;
+        return bookRepo.updateBook(book);
+
     }
     public boolean removeBook(String id){
-        if(bookMap.containsKey(id)){
-            bookMap.remove(id);
-            return true;
-        }
-        return false;
+        return bookRepo.removeBook(id);
     }
 }

@@ -6,10 +6,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-
 @Service
 public class AuthorService {
-     static Map<String,Author> authorMap = new HashMap<>();
+     Map<String,Author> authorMap = new HashMap<>();
 
     public ArrayList findAll(){
         return new ArrayList<>(authorMap.values());

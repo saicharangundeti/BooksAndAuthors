@@ -16,6 +16,8 @@ public class AuthorController {
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
+
+
     @GetMapping("/{authorId}")
     public ResponseEntity<Author> getAnAuthor(@PathVariable String authorId){
         Author author = authorService.getAuthorById(authorId);
@@ -34,16 +36,22 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
     }
+
+
     @PostMapping
     public static ResponseEntity<Author> postAuthor(@RequestBody Author author){
         if(authorService.saveAuthor(author) == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.ok(author);
     }
+
+
     @PutMapping("/{authorId}")
     public ResponseEntity<Author> updateAuthor(@RequestBody Author author){
         if(authorService.updateAuthor(author) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok(author);
     }
+
+
     @DeleteMapping("/{authorId}")
     public ResponseEntity<Boolean> deleteAuthor(@PathVariable String authorId){
         if(authorService.deleteAuthorById(authorId) == true){
@@ -51,6 +59,4 @@ public class AuthorController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
     }
-
-
 }
