@@ -16,17 +16,17 @@ public class BookRepo {
     public ArrayList<Book> findAllBooksbyName(String name){
         ArrayList<Book> specBooks = new ArrayList<>();
         for(Book book : bookMap.values()){
-            if(book.getBookName().equals(name)){
+            if(book.getName().equals(name)){
                 specBooks.add(book);
             }
         }
         return specBooks;
     }
     public Book addBook(Book book){
-        if(bookMap.containsKey(book.getBookId())){
+        if(bookMap.containsKey(book.getId())){
             return null;
         }
-        bookMap.put(book.getBookId(), book);
+        bookMap.put(book.getId(), book);
         return book;
     }
     public Book getBook(String id){
@@ -36,9 +36,9 @@ public class BookRepo {
         return null;
     }
     public Book updateBook(Book book){
-        if(bookMap.containsKey(book.getBookId())){
-            Book book1 = bookMap.get(book.getBookId());
-            book1.setBookName(book.getBookName());
+        if(bookMap.containsKey(book.getId())){
+            Book book1 = bookMap.get(book.getId());
+            book1.setName(book.getName());
             book1.setNumberOfPages(book.getNumberOfPages());
             book1.setAuthorId(book.getAuthorId());
             return book1;

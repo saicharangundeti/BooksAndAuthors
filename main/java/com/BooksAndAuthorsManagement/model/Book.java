@@ -1,15 +1,14 @@
 package com.BooksAndAuthorsManagement.model;
-import com.BooksAndAuthorsManagement.model.Author;
 
 public class Book {
-    private  String bookName;
-    private String bookId;
+    private  String name;
+    private String id;
     private String authorId;
     private int numberOfPages;
 
     public Book(String name, String id, int numberOfPages, String authorId) {
-        this.bookName = name;
-        this.bookId = id;
+        this.name = name;
+        this.id = id;
         this.numberOfPages = numberOfPages;
         this.authorId = authorId;
     }
@@ -21,24 +20,24 @@ public class Book {
         this.authorId = authorId;
     }
 
-    public String getBookName() {
-        return bookName;
+    public String getName() {
+        return name;
     }
 
 
-    public String getBookId() {
-        return bookId;
+    public String getId() {
+        return id;
     }
 
     public int getNumberOfPages() {
         return numberOfPages;
     }
-    public void setBookName(String bookName) {
-        this.bookName = bookName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setBookId(String bookId) {
-        this.bookId = bookId;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setNumberOfPages(int numberOfPages) {

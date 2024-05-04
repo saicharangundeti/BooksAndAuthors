@@ -18,9 +18,6 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @Autowired
-    private AuthorService authorService;
-
     @GetMapping("/{bookId}")
     public ResponseEntity<Book> getABook(@PathVariable String bookId){
         if(bookService.findBookById(bookId) == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);

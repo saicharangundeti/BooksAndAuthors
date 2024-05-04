@@ -1,25 +1,24 @@
 package com.BooksAndAuthorsManagement.model;
 
 public class Author {
-    private String Name;
-    private String Id;
+    private String name;
+    private String id;
 
     public Author(String authorName, String authorId) {
-        this.Name = authorName;
-        this.Id = authorId;
+        this.name = authorName;
+        this.id = authorId;
     }
     public String getName() {
-        return Name;
+        return name;
     }
     public String getId() {
-        return Id;
+        return id;
     }
     public void setName(String name) {
-        this.Name = name;
+        this.name = name;
     }
-
     public void setId(String id) {
-        this.Id = id;
+        this.id = id;
     }
 
 

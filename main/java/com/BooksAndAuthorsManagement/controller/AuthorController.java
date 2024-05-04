@@ -11,12 +11,8 @@ import java.util.*;
 @RequestMapping("/v1/authors")
 public class AuthorController {
 
-    static AuthorService authorService = new AuthorService();
     @Autowired
-    public AuthorController(AuthorService authorService) {
-        this.authorService = authorService;
-    }
-
+    private AuthorService authorService;
 
     @GetMapping("/{authorId}")
     public ResponseEntity<Author> getAnAuthor(@PathVariable String authorId){
@@ -26,9 +22,9 @@ public class AuthorController {
     }
 
     @GetMapping
-    public static ResponseEntity<ArrayList<Author>> getAllAuthors(@RequestParam(value = "authorName", required = false) String authorName){
+    public  ResponseEntity<ArrayList<Author>> getAllAuthors(@RequestParam(value = "authorName", required = false) String authorName){
         if(authorName == null || authorName.equals("")){
-            return ResponseEntity.ok(authorService.findAll());
+            return ResponseEntity.ok(authorService.findAllAuthors());
         }
         else if(authorService.findAllAuthorByName(authorName).size() > 0){
             return ResponseEntity.ok(authorService.findAllAuthorByName(authorName));
@@ -39,7 +35,7 @@ public class AuthorController {
 
 
     @PostMapping
-    public static ResponseEntity<Author> postAuthor(@RequestBody Author author){
+    public ResponseEntity<Author> postAuthor(@RequestBody Author author){
         if(authorService.saveAuthor(author) == null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.ok(author);
     }
