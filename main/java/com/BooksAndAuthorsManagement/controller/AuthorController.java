@@ -14,6 +14,10 @@ public class AuthorController {
     @Autowired
     private AuthorService authorService;
 
+    public AuthorController(AuthorService authorService) {
+        this.authorService = authorService;
+    }
+
     @GetMapping("/{authorId}")
     public ResponseEntity<Author> getAnAuthor(@PathVariable String authorId){
         Author author = authorService.getAuthorById(authorId);

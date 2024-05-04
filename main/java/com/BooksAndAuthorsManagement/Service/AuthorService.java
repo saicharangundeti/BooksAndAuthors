@@ -10,6 +10,9 @@ import java.util.*;
 public class AuthorService {
     @Autowired
     AuthorRepo authorRepo;
+    public AuthorService(AuthorRepo authorRepo){
+        this.authorRepo = authorRepo;
+    }
 
     public ArrayList<Author> findAllAuthors(){
         ArrayList allAuthors = authorRepo.findAll();

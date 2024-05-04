@@ -13,8 +13,6 @@ import java.util.*;
 public class BookService {
     @Autowired
     BookRepo bookRepo;
-    @Autowired
-    private Book book;
     public ArrayList<Book> findAllBooks(){
 
         ArrayList<Book> allBooks = bookRepo.findAllBooks();
