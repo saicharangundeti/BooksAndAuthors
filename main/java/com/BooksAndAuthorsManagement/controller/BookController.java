@@ -30,8 +30,8 @@ public class BookController {
     public ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName", required = false) String bookName) {
         if (bookName == null || bookName.equals("")) {
             return ResponseEntity.ok(bookService.findAllBooks());
-        } else if(bookService.findAllBooksbyName(bookName).size() > 0){
-            return ResponseEntity.ok(bookService.findAllBooksbyName(bookName));
+        } else if(bookService.findAllBooksByName(bookName).size() > 0){
+            return ResponseEntity.ok(bookService.findAllBooksByName(bookName));
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }

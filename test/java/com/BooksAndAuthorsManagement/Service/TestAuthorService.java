@@ -55,6 +55,39 @@ public class TestAuthorService {
         Author response = authorService.saveAuthor(new Author("charan","A1"));
         assertEquals(null,response);
     }
+    @Test
+    public void testUpdateAuthorReturnsValidName(){
+        AuthorRepo authorRepo = new AuthorRepo();
+        AuthorService authorService = new AuthorService(authorRepo);
+        Author author1= authorService.saveAuthor(new Author("sai","A1"));
+        Author response = authorService.updateAuthor(new Author("charan","A1"));
+        assertEquals("charan",response.getName());
+    }
+    @Test
+    public void testUpdateAuthorReturnsNull(){
+        AuthorRepo authorRepo = new AuthorRepo();
+        AuthorService authorService = new AuthorService(authorRepo);
+        Author author1= authorService.saveAuthor(new Author("sai","A1"));
+        Author response = authorService.updateAuthor(new Author("charan","A2"));
+        assertEquals(null,response);
+    }
+    @Test
+    public void testDeleteAuthorReturnsTrue(){
+        AuthorRepo authorRepo = new AuthorRepo();
+        AuthorService authorService = new AuthorService(authorRepo);
+        Author author1= authorService.saveAuthor(new Author("sai","A1"));
+        Boolean response = authorService.deleteAuthorById("A1");
+        assertEquals(true,response);
+    }
+    @Test
+    public void testDeleteAuthorReturnsFalse(){
+        AuthorRepo authorRepo = new AuthorRepo();
+        AuthorService authorService = new AuthorService(authorRepo);
+        Author author1= authorService.saveAuthor(new Author("sai","A1"));
+        Boolean response = authorService.deleteAuthorById("A2");
+        assertEquals(false,response);
+    }
+
 
 
 }

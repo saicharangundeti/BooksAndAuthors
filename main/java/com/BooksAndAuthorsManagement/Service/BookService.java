@@ -21,7 +21,7 @@ public class BookService {
         ArrayList<Book> allBooks = bookRepo.findAllBooks();
         return allBooks;
     }
-    public ArrayList<Book> findAllBooksbyName(String name){
+    public ArrayList<Book> findAllBooksByName(String name){
 
         ArrayList<Book> specBooks = bookRepo.findAllBooksbyName(name);
         return specBooks;
