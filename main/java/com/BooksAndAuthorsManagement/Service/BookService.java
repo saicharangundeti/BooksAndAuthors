@@ -12,7 +12,10 @@ import java.util.*;
 @Service
 public class BookService {
     @Autowired
-    BookRepo bookRepo;
+    private BookRepo bookRepo;
+    public BookService(BookRepo bookRepo){
+        this.bookRepo = bookRepo;
+    }
     public ArrayList<Book> findAllBooks(){
 
         ArrayList<Book> allBooks = bookRepo.findAllBooks();

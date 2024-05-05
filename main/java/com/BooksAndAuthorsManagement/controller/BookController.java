@@ -1,8 +1,6 @@
 package com.BooksAndAuthorsManagement.controller;
 
-import com.BooksAndAuthorsManagement.Service.AuthorService;
 import com.BooksAndAuthorsManagement.Service.BookService;
-import com.BooksAndAuthorsManagement.model.Author;
 import com.BooksAndAuthorsManagement.model.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +15,9 @@ public class BookController {
 
     @Autowired
     private BookService bookService;
+    public BookController(BookService bookService){
+        this.bookService = bookService;
+    }
 
     @GetMapping("/{bookId}")
     public ResponseEntity<Book> getABook(@PathVariable String bookId){
@@ -39,7 +40,7 @@ public class BookController {
     @PostMapping
     public ResponseEntity<Book> postBook(@RequestBody Book book){
         if(bookService.saveBook(book) == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         return ResponseEntity.ok(book);
     }
 
@@ -47,7 +48,7 @@ public class BookController {
     @PutMapping("/{bookId}")
     public ResponseEntity<Book> updateBook(@RequestBody Book book){
         if(bookService.updateBook(book) == null ) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
         return ResponseEntity.ok(bookService.updateBook(book));
     }
