@@ -31,7 +31,7 @@ public class AuthorRepo {
         return null;
     }
     public Author saveAuthor(Author author){
-        if(author.getId() != null){
+        if(author.getId() != null && !authorMap.containsKey(author.getId())){
             authorMap.put(author.getId(), author);
             return author;
         }
