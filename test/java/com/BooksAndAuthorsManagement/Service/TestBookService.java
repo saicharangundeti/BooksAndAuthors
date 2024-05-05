@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestBookService {
     @Test
@@ -15,7 +15,7 @@ public class TestBookService {
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
         Book response = bookService.findBookById("B1");
-        assertEquals("hell",response.getName());
+        assertEquals(book1.getName(),response.getName());
     }
     @Test
     public void testBookByIdReturnsNull(){
@@ -23,7 +23,7 @@ public class TestBookService {
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
         Book response = bookService.findBookById("B2");
-        assertEquals(null,response);
+        assertNull(response);
     }
     @Test
     public void testFindAllBooksReturnsValidSize(){
@@ -56,8 +56,7 @@ public class TestBookService {
     public void testSaveBookReturnsValidName(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book response = bookService.saveBook(new Book("heaven","B2",10,"A2"));;
+        Book response = bookService.saveBook(new Book("heaven","B2",10,"A2"));
         assertEquals("heaven",response.getName());
     }
     @Test
@@ -65,15 +64,15 @@ public class TestBookService {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book response = bookService.saveBook(new Book("heaven","B1",10,"A2"));;
-        assertEquals(null,response);
+        Book response = bookService.saveBook(new Book("heaven","B1",10,"A2"));
+        assertNull(response);
     }
     @Test
     public void testBookUpdateReturnsValidBookName(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book response = bookService.updateBook(new Book("heaven","B1",10,"A2"));;
+        Book response = bookService.updateBook(new Book("heaven","B1",10,"A2"));
         assertEquals("heaven",response.getName());
     }
     @Test
@@ -81,24 +80,24 @@ public class TestBookService {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book response = bookService.updateBook(new Book("heaven","B2",10,"A2"));;
-        assertEquals(null,response);
+        Book response = bookService.updateBook(new Book("heaven","B2",10,"A2"));
+        assertNull(response);
     }
     @Test
     public void testRemoveBookReturnsTrue(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Boolean response = bookService.removeBook("B1");;
-        assertEquals(true,response);
+        Boolean response = bookService.removeBook("B1");
+        assertEquals(true, response);
     }
     @Test
     public void testRemoveBookReturnsFalse(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Boolean response = bookService.removeBook("B2");;
-        assertEquals(false,response);
+        Boolean response = bookService.removeBook("B2");
+        assertEquals(false, response);
     }
 
 

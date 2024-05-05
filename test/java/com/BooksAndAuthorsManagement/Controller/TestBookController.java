@@ -47,7 +47,7 @@ public class TestBookController {
         BookController bookController = new BookController(bookService);
         ResponseEntity<Book> book = bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.getABook("B2");
-        assertEquals(null,response.getBody());
+        assertNull(response.getBody());
     }
     @Test
     public void testGetAllBookReturnsOKStatus(){
@@ -122,7 +122,7 @@ public class TestBookController {
         BookController bookController = new BookController(bookService);
         ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.postBook(new Book("heaven","B1",10,"A2"));
-        assertEquals(null,response.getBody());
+        assertNull(response.getBody());
     }
     @Test
     public void testUpdateBookReturnsOKStatusCode(){
@@ -158,7 +158,7 @@ public class TestBookController {
         BookController bookController = new BookController(bookService);
         ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B2",10,"A2"));
-        assertEquals(null,response.getBody());
+        assertNull(response.getBody());
     }
 
     @Test

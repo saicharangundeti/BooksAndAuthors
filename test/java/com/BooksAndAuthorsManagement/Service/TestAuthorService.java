@@ -20,7 +20,7 @@ public class TestAuthorService {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         Author author = authorService.saveAuthor(new Author("sai","A1"));
-        assertEquals(null ,authorService.getAuthorById("A2"));
+        assertNull(authorService.getAuthorById("A2"));
     }
     @Test
     public void testFindAllAuthorsReturnsValidSize(){
@@ -53,7 +53,7 @@ public class TestAuthorService {
         AuthorService authorService = new AuthorService(authorRepo);
         Author author1= authorService.saveAuthor(new Author("sai","A1"));
         Author response = authorService.saveAuthor(new Author("charan","A1"));
-        assertEquals(null,response);
+        assertNull(response);
     }
     @Test
     public void testUpdateAuthorReturnsValidName(){
@@ -69,7 +69,7 @@ public class TestAuthorService {
         AuthorService authorService = new AuthorService(authorRepo);
         Author author1= authorService.saveAuthor(new Author("sai","A1"));
         Author response = authorService.updateAuthor(new Author("charan","A2"));
-        assertEquals(null,response);
+        assertNull(response);
     }
     @Test
     public void testDeleteAuthorReturnsTrue(){
