@@ -23,7 +23,7 @@ public class BookService {
     }
     public ArrayList<Book> findAllBooksByName(String name){
 
-        ArrayList<Book> specBooks = bookRepo.findAllBooksbyName(name);
+        ArrayList<Book> specBooks = bookRepo.findAllBooksByName(name);
         return specBooks;
     }
     public Book findBookById(String id){

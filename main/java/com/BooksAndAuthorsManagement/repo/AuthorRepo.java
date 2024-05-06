@@ -9,7 +9,11 @@ import java.util.Map;
 
 @Repository
 public class AuthorRepo {
-    private Map<String, Author> authorMap = new HashMap<>();
+    private final Map<String, Author> authorMap;
+
+    public AuthorRepo() {
+        authorMap = new HashMap<>();
+    }
 
     public ArrayList<Author> findAll(){
 

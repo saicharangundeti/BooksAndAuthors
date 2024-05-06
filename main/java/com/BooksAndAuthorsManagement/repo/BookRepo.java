@@ -13,7 +13,7 @@ public class BookRepo {
     public ArrayList<Book> findAllBooks(){
         return new ArrayList<>(bookMap.values());
     }
-    public ArrayList<Book> findAllBooksbyName(String name){
+    public ArrayList<Book> findAllBooksByName(String name){
         ArrayList<Book> specBooks = new ArrayList<>();
         for(Book book : bookMap.values()){
             if(book.getName().equals(name)){

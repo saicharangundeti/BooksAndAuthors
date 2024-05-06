@@ -21,7 +21,7 @@ public class TestBookService {
     public void testBookByIdReturnsNull(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
         Book response = bookService.findBookById("B2");
         assertNull(response);
     }
@@ -29,8 +29,8 @@ public class TestBookService {
     public void testFindAllBooksReturnsValidSize(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book book2 = bookService.saveBook(new Book("heaven","B2",10,"A2"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("heaven","B2",10,"A2"));
         ArrayList<Book> response = bookService.findAllBooks();
         assertEquals(2,response.size());
     }
@@ -38,8 +38,8 @@ public class TestBookService {
     public void testFindAllBooksByNameReturnsValidSize(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book book2 = bookService.saveBook(new Book("heaven","B2",10,"A2"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("heaven","B2",10,"A2"));
         ArrayList<Book> response = bookService.findAllBooksByName("hell");
         assertEquals(1,response.size());
     }
@@ -47,8 +47,8 @@ public class TestBookService {
     public void testFindAllBooksByNameReturnsZeroSize(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
-        Book book2 = bookService.saveBook(new Book("heaven","B2",10,"A2"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("heaven","B2",10,"A2"));
         ArrayList<Book> response = bookService.findAllBooksByName("dark");
         assertEquals(0,response.size());
     }
@@ -63,7 +63,7 @@ public class TestBookService {
     public void testSaveBookReturnsNull(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
         Book response = bookService.saveBook(new Book("heaven","B1",10,"A2"));
         assertNull(response);
     }
@@ -71,7 +71,7 @@ public class TestBookService {
     public void testBookUpdateReturnsValidBookName(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
         Book response = bookService.updateBook(new Book("heaven","B1",10,"A2"));
         assertEquals("heaven",response.getName());
     }
@@ -79,7 +79,7 @@ public class TestBookService {
     public void testBookUpdateReturnsNull(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
         Book response = bookService.updateBook(new Book("heaven","B2",10,"A2"));
         assertNull(response);
     }
@@ -87,7 +87,7 @@ public class TestBookService {
     public void testRemoveBookReturnsTrue(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
         Boolean response = bookService.removeBook("B1");
         assertEquals(true, response);
     }
@@ -95,7 +95,7 @@ public class TestBookService {
     public void testRemoveBookReturnsFalse(){
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
-        Book book1 = bookService.saveBook(new Book("hell","B1",20,"A1"));
+        bookService.saveBook(new Book("hell","B1",20,"A1"));
         Boolean response = bookService.removeBook("B2");
         assertEquals(false, response);
     }

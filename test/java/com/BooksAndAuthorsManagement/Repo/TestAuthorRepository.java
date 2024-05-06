@@ -1,7 +1,6 @@
 package com.BooksAndAuthorsManagement.Repo;
 
 import com.BooksAndAuthorsManagement.model.Author;
-import com.BooksAndAuthorsManagement.model.Book;
 import com.BooksAndAuthorsManagement.repo.AuthorRepo;
 import org.junit.jupiter.api.Test;
 

@@ -16,7 +16,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.getABook("B1");
         assertEquals(HttpStatus.OK,response.getStatusCode());
 
@@ -26,7 +26,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.getABook("B2");
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
 
@@ -36,7 +36,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.getABook("B1");
         assertEquals("hell",response.getBody().getName());
     }
@@ -45,7 +45,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.getABook("B2");
         assertNull(response.getBody());
     }
@@ -54,8 +54,8 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
-        ResponseEntity<Book> book2 = bookController.postBook(new Book("heaven","B2",18,"A2"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("heaven","B2",18,"A2"));
         ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks(null);
         assertEquals(HttpStatus.OK,response.getStatusCode());
 
@@ -65,8 +65,8 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
-        ResponseEntity<Book> book2 = bookController.postBook(new Book("heaven","B2",18,"A2"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("heaven","B2",18,"A2"));
         ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks("Dark");
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
@@ -75,8 +75,8 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
-        ResponseEntity<Book> book2 = bookController.postBook(new Book("heaven","B2",18,"A2"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("heaven","B2",18,"A2"));
         ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks(null);
         assertEquals(2,response.getBody().size());
     }
@@ -85,8 +85,8 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
-        ResponseEntity<Book> book2 = bookController.postBook(new Book("heaven","B2",18,"A2"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("heaven","B2",18,"A2"));
         ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks("hell");
         assertNotEquals(2,response.getBody().size());
     }
@@ -103,7 +103,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.postBook(new Book("heaven","B1",10,"A2"));
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
@@ -120,7 +120,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.postBook(new Book("heaven","B1",10,"A2"));
         assertNull(response.getBody());
     }
@@ -129,7 +129,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B1",10,"A2"));
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
@@ -138,7 +138,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B2",10,"A2"));
         assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
@@ -147,7 +147,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B1",10,"A2"));
         assertEquals("heaven",response.getBody().getName());
     }
@@ -156,7 +156,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B2",10,"A2"));
         assertNull(response.getBody());
     }
@@ -166,7 +166,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Boolean> response = bookController.deleteBook("B1");
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
@@ -175,7 +175,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Boolean> response = bookController.deleteBook("B2");
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
@@ -184,7 +184,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Boolean> response = bookController.deleteBook("B1");
         assertEquals(true,response.getBody());
     }
@@ -193,7 +193,7 @@ public class TestBookController {
         BookRepo bookRepo = new BookRepo();
         BookService bookService = new BookService(bookRepo);
         BookController bookController = new BookController(bookService);
-        ResponseEntity<Book> book1 = bookController.postBook(new Book("hell","B1",20,"A1"));
+        bookController.postBook(new Book("hell","B1",20,"A1"));
         ResponseEntity<Boolean> response = bookController.deleteBook("B2");
         assertEquals(false,response.getBody());
     }
