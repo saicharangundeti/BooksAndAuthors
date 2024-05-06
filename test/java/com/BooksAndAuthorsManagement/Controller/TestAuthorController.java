@@ -19,7 +19,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.getAnAuthor("A1");
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
@@ -28,7 +28,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.getAnAuthor("A2");
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
@@ -37,7 +37,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.getAnAuthor("A1");
         assertEquals("sai",response.getBody().getName());
     }
@@ -46,9 +46,9 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.getAnAuthor("A2");
-        assertEquals(null,response.getBody());
+        assertNull(response.getBody());
 
     }
     @Test
@@ -56,7 +56,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<ArrayList<Author>> response = authorController.getAllAuthors(null);
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
@@ -65,7 +65,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<ArrayList<Author>> response = authorController.getAllAuthors("charan");
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
@@ -74,8 +74,8 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author1 = authorController.postAuthor(new Author("sai","A1"));
-        ResponseEntity<Author> author2 = authorController.postAuthor(new Author("charan","A2"));
+        authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("charan","A2"));
         ResponseEntity<ArrayList<Author>> response = authorController.getAllAuthors(null);
         assertEquals(2,response.getBody().size());
     }
@@ -84,8 +84,8 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author1 = authorController.postAuthor(new Author("sai","A1"));
-        ResponseEntity<Author> author2 = authorController.postAuthor(new Author("charan","A2"));
+        authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("charan","A2"));
         ResponseEntity<ArrayList<Author>> response = authorController.getAllAuthors(null);
         assertNotEquals(1,response.getBody().size());
     }
@@ -98,16 +98,6 @@ public class TestAuthorController {
         assertEquals(HttpStatus.OK,response.getStatusCode());
 
     }
-//    @Test
-//    public void testPostAuthorReturnsBadRequestStatusCode(){
-//        AuthorRepo authorRepo = new AuthorRepo();
-//        AuthorService authorService = new AuthorService(authorRepo);
-//        AuthorController authorController = new AuthorController(authorService);
-//        ResponseEntity<Author> author1 = authorController.postAuthor(new Author("sai","A1"));
-//        ResponseEntity<Author> response = authorController.postAuthor(new Author("charan","A1"));
-//        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
-//
-//    }
 
     @Test
     public void testPostAuthorReturnsValidName(){
@@ -132,7 +122,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.updateAuthor(new Author("update sai","A1"));
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
@@ -141,7 +131,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.updateAuthor(new Author("update sai","A2"));
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
@@ -150,7 +140,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.updateAuthor(new Author("update sai","A1"));
         assertEquals("update sai",response.getBody().getName());
     }
@@ -159,16 +149,16 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Author> response = authorController.updateAuthor(new Author("update sai","A2"));
-        assertEquals(null,response.getBody());
+        assertNull(response.getBody());
     }
     @Test
     public void testDeleteAuthorReturnsOKStatusCode(){
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Boolean> response = authorController.deleteAuthor("A1");
         assertEquals(HttpStatus.OK,response.getStatusCode());
     }
@@ -177,7 +167,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Boolean> response = authorController.deleteAuthor("A2");
         assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
     }
@@ -186,7 +176,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Boolean> response = authorController.deleteAuthor("A1");
         assertEquals(true,response.getBody());
     }
@@ -195,7 +185,7 @@ public class TestAuthorController {
         AuthorRepo authorRepo = new AuthorRepo();
         AuthorService authorService = new AuthorService(authorRepo);
         AuthorController authorController = new AuthorController(authorService);
-        ResponseEntity<Author> author = authorController.postAuthor(new Author("sai","A1"));
+        authorController.postAuthor(new Author("sai","A1"));
         ResponseEntity<Boolean> response = authorController.deleteAuthor("A2");
         assertEquals(false,response.getBody());
     }

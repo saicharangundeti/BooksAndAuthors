@@ -15,8 +15,7 @@ public class AuthorService {
     }
 
     public ArrayList<Author> findAllAuthors(){
-        ArrayList allAuthors = authorRepo.findAll();
-        return allAuthors;
+        return authorRepo.findAll();
     }
     public ArrayList<Author> findAllAuthorByName(String name){
         return authorRepo.findAllAuthorByName(name);
@@ -25,12 +24,10 @@ public class AuthorService {
         return authorRepo.getAuthorById(id);
     }
     public Author saveAuthor(Author author) {
-        Author savedAuthor = authorRepo.saveAuthor(author);
-        return savedAuthor;
+        return authorRepo.saveAuthor(author);
     }
     public Author updateAuthor(Author author){
-        Author updateAuthor = authorRepo.updateAuthor(author);
-        return updateAuthor;
+        return  authorRepo.updateAuthor(author);
     }
     public boolean deleteAuthorById(String id){
         return authorRepo.deleteAuthor(id);

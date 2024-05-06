@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Repository
 public class BookRepo {
-    private Map<String , Book> bookMap = new HashMap<>();
+    private final Map<String , Book> bookMap = new HashMap<>();
     public ArrayList<Book> findAllBooks(){
         return new ArrayList<>(bookMap.values());
     }

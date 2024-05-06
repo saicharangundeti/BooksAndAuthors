@@ -12,36 +12,29 @@ import java.util.*;
 @Service
 public class BookService {
     @Autowired
-    private BookRepo bookRepo;
+    private final BookRepo bookRepo;
     public BookService(BookRepo bookRepo){
         this.bookRepo = bookRepo;
     }
     public ArrayList<Book> findAllBooks(){
 
-        ArrayList<Book> allBooks = bookRepo.findAllBooks();
-        return allBooks;
+        return bookRepo.findAllBooks();
     }
     public ArrayList<Book> findAllBooksByName(String name){
-
-        ArrayList<Book> specBooks = bookRepo.findAllBooksByName(name);
-        return specBooks;
+        return bookRepo.findAllBooksByName(name);
     }
     public Book findBookById(String id){
-        Book reqBook = bookRepo.getBook(id);
-        return reqBook;
+        return bookRepo.getBook(id);
     }
     public Book saveBook(Book book){
-        Book savedBook = bookRepo.addBook(book);
-        return savedBook;
+        return bookRepo.addBook(book);
     }
     public Book updateBook(Book book){
-        Book updatedBook = bookRepo.updateBook(book);
-        return updatedBook;
+        return bookRepo.updateBook(book);
 
     }
     public boolean removeBook(String id){
-        boolean isRemoved = bookRepo.removeBook(id);
-        return isRemoved;
+        return bookRepo.removeBook(id);
     }
 }
 

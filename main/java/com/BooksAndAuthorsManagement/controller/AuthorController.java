@@ -12,7 +12,7 @@ import java.util.*;
 public class AuthorController {
 
     @Autowired
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
@@ -54,7 +54,7 @@ public class AuthorController {
 
     @DeleteMapping("/{authorId}")
     public ResponseEntity<Boolean> deleteAuthor(@PathVariable String authorId){
-        if(authorService.deleteAuthorById(authorId) == true){
+        if(authorService.deleteAuthorById(authorId)){
             return ResponseEntity.ok(true);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
