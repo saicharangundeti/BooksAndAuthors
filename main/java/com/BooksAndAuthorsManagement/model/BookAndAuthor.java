@@ -3,11 +3,12 @@ package com.BooksAndAuthorsManagement.model;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BookAndAuthor {
-    @Autowired
+
     Book book  ;
-    @Autowired
+
     Author author ;
-    BookAndAuthor(Book book,Author author){
+    public BookAndAuthor(){}
+    public BookAndAuthor(Book book, Author author){
         this.book = book;
         this.author = author;
     }
@@ -23,5 +24,4 @@ public class BookAndAuthor {
     public void setAuthor(Author author){
         this.author = author;
     }
-
 }

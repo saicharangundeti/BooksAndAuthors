@@ -1,35 +1,56 @@
 package com.BooksAndAuthorsManagement.Service;
 import com.BooksAndAuthorsManagement.model.Author;
 import com.BooksAndAuthorsManagement.repo.AuthorRepo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
 public class AuthorService {
-    @Autowired
-    AuthorRepo authorRepo;
+    private  AuthorRepo authorRepo;
+    private  int authorId=0;
+
     public AuthorService(AuthorRepo authorRepo){
         this.authorRepo = authorRepo;
     }
 
-    public ArrayList<Author> findAllAuthors(){
+    public List<Author> findAllAuthors(){
         return authorRepo.findAll();
     }
-    public ArrayList<Author> findAllAuthorByName(String name){
-        return authorRepo.findAllAuthorByName(name);
+     public Author findAuthorByName(String name){
+        return authorRepo.findAuthorByName(name);
     }
-    public Author getAuthorById(String id) {
-        return authorRepo.getAuthorById(id);
+    public Author getAuthorById(int id)
+    {
+        if(authorRepo.getAuthor(id) != null){
+            return authorRepo.getAuthor(id);
+        }
+        return null;
     }
-    public Author saveAuthor(Author author) {
-        return authorRepo.saveAuthor(author);
+    public Author saveAuthor(Author author)
+    {
+        if(authorRepo.findAuthorByName(author.getName()) == null) {
+            authorRepo.saveAuthor(author);
+            return author;
+        }
+        return null;
+
+
     }
     public Author updateAuthor(Author author){
-        return  authorRepo.updateAuthor(author);
+        //if author doesn't exit
+        if(authorRepo.getAuthor(author.getId()) == null){
+            return null;
+        }
+        authorRepo.updateAuthor(author);
+        return author;
     }
-    public boolean deleteAuthorById(String id){
-        return authorRepo.deleteAuthor(id);
+    public boolean deleteAuthorById(int id){
+        // if author doesn't exit
+        if(authorRepo.getAuthor(id) == null){
+            return false;
+        }
+        authorRepo.removeAuthor(id);
+        return true;
     }
 }

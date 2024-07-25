@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 
-
 @Service
 public class BookService {
     @Autowired
@@ -16,25 +15,44 @@ public class BookService {
     public BookService(BookRepo bookRepo){
         this.bookRepo = bookRepo;
     }
-    public ArrayList<Book> findAllBooks(){
+    public List<Book> findAllBooks(){
 
         return bookRepo.findAllBooks();
     }
-    public ArrayList<Book> findAllBooksByName(String name){
-        return bookRepo.findAllBooksByName(name);
-    }
-    public Book findBookById(String id){
-        return bookRepo.getBook(id);
+//    public ArrayList<Book> findAllBooksByName(String name){
+//        return bookRepo.findAllBooksByName(name);
+//    }
+    public Book findBookById(int id){
+        if(bookRepo.getBookById(id) == null){
+            return null;
+        }
+        return bookRepo.getBookById(id);
     }
     public Book saveBook(Book book){
-        return bookRepo.addBook(book);
+        if(bookRepo.getBookByName(book.getName()) == null){
+            bookRepo.saveBook(book);
+            bookRepo.saveBookAndAuthorIntoRelationTable(book);
+            return book;
+        };
+        return null;
     }
     public Book updateBook(Book book){
-        return bookRepo.updateBook(book);
+       if(bookRepo.getBookById(book.getId()) == null){
+           return null;
+       }
+       bookRepo.updateBook(book);
+       bookRepo.updateBookIdAndAuthorIdInRelationTable(book);
+       return book;
 
     }
-    public boolean removeBook(String id){
-        return bookRepo.removeBook(id);
+    public boolean deleteBook(int id){
+        if(bookRepo.getBookById(id) == null){
+            return false;
+        }
+        bookRepo.removeBook(id);
+        bookRepo.removeBookAndAuthorInRelationTable(id);
+        return true;
+
     }
 }
 

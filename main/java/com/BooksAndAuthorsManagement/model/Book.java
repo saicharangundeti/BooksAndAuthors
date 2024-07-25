@@ -1,22 +1,29 @@
 package com.BooksAndAuthorsManagement.model;
 
-public class Book {
-    private  String name;
-    private String id;
-    private String authorId;
-    private int numberOfPages;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-    public Book(String name, String id, int numberOfPages, String authorId) {
-        this.name = name;
+public class Book {
+    private int id;
+    @Size(min=2)
+    private  String name;
+    @NotNull
+    private int authorId;
+    private int numberOfPages;
+    public Book(){}
+
+    public Book(int id,String name,int numberOfPages,int authorId) {
         this.id = id;
+        this.name=name;
         this.numberOfPages = numberOfPages;
         this.authorId = authorId;
+
     }
-    public String getAuthorId() {
+    public int getAuthorId() {
         return authorId;
     }
 
-    public void setAuthorId(String authorId) {
+    public void setAuthorId(int authorId) {
         this.authorId = authorId;
     }
 
@@ -25,7 +32,7 @@ public class Book {
     }
 
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -36,7 +43,7 @@ public class Book {
         this.name = name;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -45,7 +52,13 @@ public class Book {
     }
 
 
-
-
-
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", authorId=" + authorId +
+                ", numberOfPages=" + numberOfPages +
+                '}';
+    }
 }
