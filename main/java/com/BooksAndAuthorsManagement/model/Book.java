@@ -3,28 +3,30 @@ package com.BooksAndAuthorsManagement.model;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
+
 public class Book {
     private int id;
     @Size(min=2)
     private  String name;
     @NotNull
-    private int authorId;
+    private List<Integer> authorIds;
     private int numberOfPages;
     public Book(){}
 
-    public Book(int id,String name,int numberOfPages,int authorId) {
+    public Book(int id,String name,int numberOfPages,List<Integer> authorIds) {
         this.id = id;
         this.name=name;
         this.numberOfPages = numberOfPages;
-        this.authorId = authorId;
+        this.authorIds = authorIds;
 
     }
-    public int getAuthorId() {
-        return authorId;
+    public List<Integer> getAuthorIds() {
+        return authorIds;
     }
 
-    public void setAuthorId(int authorId) {
-        this.authorId = authorId;
+    public void setAuthors(List<Integer> authorIds) {
+        this.authorIds = authorIds;
     }
 
     public String getName() {
@@ -57,7 +59,7 @@ public class Book {
         return "Book{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", authorId=" + authorId +
+                ", authorId=" + authorIds +
                 ", numberOfPages=" + numberOfPages +
                 '}';
     }

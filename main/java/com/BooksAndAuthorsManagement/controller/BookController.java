@@ -49,7 +49,7 @@ public class BookController {
 
 
     @PostMapping("")
-    public ResponseEntity<String> postBook(@Valid @RequestBody Book book) {
+    public ResponseEntity<String> postBook(@Valid  @RequestBody Book book) {
         try {
             if (bookService.saveBook(book) == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -63,9 +63,9 @@ public class BookController {
 
 
     @PutMapping("/{bookId}")
-    public ResponseEntity<Book> updateBook(@RequestBody Book book){
-        if(bookService.updateBook(book) != null )
-            return ResponseEntity.ok(bookService.updateBook(book));
+    public ResponseEntity<Book> updateBook(@PathVariable int bookId,@RequestBody Book book){
+        if(bookService.findBookById(bookId) != null )
+            return ResponseEntity.ok(bookService.updateBook(bookId,book));
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 
 

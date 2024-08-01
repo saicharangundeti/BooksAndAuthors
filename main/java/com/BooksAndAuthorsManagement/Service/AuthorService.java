@@ -18,18 +18,18 @@ public class AuthorService {
         return authorRepo.findAll();
     }
      public Author findAuthorByName(String name){
-        return authorRepo.findAuthorByName(name);
+        return authorRepo.getAuthorByName(name);
     }
     public Author getAuthorById(int id)
     {
-        if(authorRepo.getAuthor(id) != null){
-            return authorRepo.getAuthor(id);
+        if(authorRepo.getAuthorById(id) != null){
+            return authorRepo.getAuthorById(id);
         }
         return null;
     }
     public Author saveAuthor(Author author)
     {
-        if(authorRepo.findAuthorByName(author.getName()) == null) {
+        if(authorRepo.getAuthorByName(author.getName()) == null ) {
             authorRepo.saveAuthor(author);
             return author;
         }
@@ -39,7 +39,7 @@ public class AuthorService {
     }
     public Author updateAuthor(Author author){
         //if author doesn't exit
-        if(authorRepo.getAuthor(author.getId()) == null){
+        if(authorRepo.getAuthorById(author.getId()) == null){
             return null;
         }
         authorRepo.updateAuthor(author);
@@ -47,7 +47,7 @@ public class AuthorService {
     }
     public boolean deleteAuthorById(int id){
         // if author doesn't exit
-        if(authorRepo.getAuthor(id) == null){
+        if(authorRepo.getAuthorById(id) == null){
             return false;
         }
         authorRepo.removeAuthor(id);

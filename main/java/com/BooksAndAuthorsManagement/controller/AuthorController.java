@@ -31,14 +31,14 @@ public class AuthorController {
         return ResponseEntity.ok(author);
     }
 
-//    @GetMapping("/authorsByName")
-//    public  ResponseEntity<List<Author>> getAllAuthorsByName(@RequestParam(value = "authorName", required = false) String authorName){
-//        if(authorService.findAuthorByName(authorName).size() > 0){
-//            return ResponseEntity.ok(authorService.findAllAuthorsByName(authorName));
-//        }
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//
-//    }
+    @GetMapping("/authorsByName")
+    public  ResponseEntity<Author> getAuthorByName(@RequestParam(value = "authorName", required = false) String authorName){
+        if(authorService.findAuthorByName(authorName) != null){
+            return ResponseEntity.ok(authorService.findAuthorByName(authorName));
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+    }
 
 
     @PostMapping("/authors")
@@ -46,10 +46,8 @@ public class AuthorController {
         if(authorService.saveAuthor(author) == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(author.getId()).toUri();
-        return ResponseEntity.created(location).build();
+
+        return ResponseEntity.ok(author);
     }
 
 

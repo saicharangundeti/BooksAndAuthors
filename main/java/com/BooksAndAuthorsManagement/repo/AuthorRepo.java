@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -31,24 +30,7 @@ public class AuthorRepo {
         String query1 = "SELECT * FROM authors ORDER BY id asc";
         return  jdbcTemplate.query(query1,new AuthorMapper());
     }
-//    public List<Author> findAllAuthorsForABook(int id){
-//        String query1 = "SELECT * FROM authors_table " +
-//                "inner join books_table " +
-//                "where authors_table.id = books_table.authorID";
-//
-//        return  jdbcTemplate.query(query1,new AuthorMapper());
-//    }
-
-    public Author findAuthorByName(String name){
-        String query1 = "SELECT * FROM authors WHERE name = ?";
-        try{
-            return jdbcTemplate.queryForObject(query1,new Object[]{name},new AuthorMapper());
-        }
-        catch ( EmptyResultDataAccessException e){
-            return  null;
-        }
-    }
-    public Author getAuthor(int id){
+    public Author getAuthorById(int id){
         String query1 = "SELECT * FROM authors WHERE id = ?";
         try {
             return jdbcTemplate.queryForObject(query1,new Object[]{id},new AuthorMapper());
@@ -57,10 +39,19 @@ public class AuthorRepo {
             return null;
         }
     }
-    public int saveAuthor(Author author){
-        String query1 = "INSERT INTO authors (id,name) values(?,?)";
-        return jdbcTemplate.update(query1,author.getId(),author.getName());
+    public Author getAuthorByName(String  name){
+        String query1 = "SELECT * FROM authors WHERE name = ?";
+        try {
+            return jdbcTemplate.queryForObject(query1,new Object[]{name},new AuthorMapper());
+        }
+        catch (EmptyResultDataAccessException e){
+            return null;
+        }
     }
+    public int saveAuthor(Author author) {
+            String query1 = "INSERT INTO authors (id,name) values(?,?)";
+            return jdbcTemplate.update(query1, author.getId(), author.getName());
+        }
     public int updateAuthor(Author author){
 
         String query1 = "UPDATE authors SET values(?) WHERE id = ?";

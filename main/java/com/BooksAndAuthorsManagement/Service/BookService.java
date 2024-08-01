@@ -2,7 +2,7 @@ package com.BooksAndAuthorsManagement.Service;
 
 import com.BooksAndAuthorsManagement.model.Book;
 import com.BooksAndAuthorsManagement.repo.BookRepo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.BooksAndAuthorsManagement.repo.RelationRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -10,38 +10,61 @@ import java.util.*;
 
 @Service
 public class BookService {
-    @Autowired
-    private final BookRepo bookRepo;
-    public BookService(BookRepo bookRepo){
+    private  BookRepo bookRepo;
+    private  RelationRepo relationRepo;
+    private AuthorService authorService;
+
+    public BookService(BookRepo bookRepo, RelationRepo relationRepo,AuthorService authorService){
         this.bookRepo = bookRepo;
+        this.relationRepo = relationRepo;
+        this.authorService = authorService;
     }
     public List<Book> findAllBooks(){
-
-        return bookRepo.findAllBooks();
+        List<Book> books = bookRepo.findAllBooks();
+        for(Book book : books){
+            book.setAuthors(relationRepo.getAuthorId(book.getId()));
+        }
+        return books;
     }
-//    public ArrayList<Book> findAllBooksByName(String name){
-//        return bookRepo.findAllBooksByName(name);
-//    }
     public Book findBookById(int id){
-        if(bookRepo.getBookById(id) == null){
+        if(bookRepo.getBookById(id) == null) {
             return null;
         }
-        return bookRepo.getBookById(id);
+        Book book = bookRepo.getBookById(id);
+        book.setAuthors(relationRepo.getAuthorId(id));
+        return book;
     }
     public Book saveBook(Book book){
+        boolean isExistBookId = true;
+        for(int bookId : book.getAuthorIds()){
+            if(authorService.getAuthorById(bookId) == null){
+                isExistBookId = false;
+            }
+        }
         if(bookRepo.getBookByName(book.getName()) == null){
-            bookRepo.saveBook(book);
-            bookRepo.saveBookAndAuthorIntoRelationTable(book);
-            return book;
-        };
+            if(isExistBookId) {
+                bookRepo.saveBook(book);
+                bookRepo.saveBookIdAndAuthorIdIntoRelation(book);
+                book.setAuthors(relationRepo.getAuthorId(book.getId()));
+                return book;
+            }
+            return null;
+        }
+        else if(isExistBookId) {
+            bookRepo.saveBookIdAndAuthorIdIntoRelation(book);
+            book.setAuthors(relationRepo.getAuthorId(book.getId()));
+        }
         return null;
     }
-    public Book updateBook(Book book){
-       if(bookRepo.getBookById(book.getId()) == null){
+    public Book updateBook(int id, Book book){
+       if(bookRepo.getBookById(id) == null){
            return null;
        }
-       bookRepo.updateBook(book);
-       bookRepo.updateBookIdAndAuthorIdInRelationTable(book);
+       bookRepo.updateBook(id,book);
+       relationRepo.removeBookAndAuthor(id);
+       relationRepo.updateBookIdAndAuthorId(id,book.getAuthorIds());
+       book.setAuthors(relationRepo.getAuthorId(id));
+       book.setId(id);
        return book;
 
     }
@@ -50,7 +73,7 @@ public class BookService {
             return false;
         }
         bookRepo.removeBook(id);
-        bookRepo.removeBookAndAuthorInRelationTable(id);
+        relationRepo.removeBookAndAuthor(id);
         return true;
 
     }
