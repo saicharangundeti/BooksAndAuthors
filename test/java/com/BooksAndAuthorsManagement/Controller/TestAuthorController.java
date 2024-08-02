@@ -72,7 +72,7 @@ public class TestAuthorController {
     }
 
     @Test
-    public void testGetAllAuthors() {
+    public void testGetAllAuthors_success() {
 
         AuthorService authorServiceMoc = mock(AuthorService.class);
         List<Author> expectedAuthors = Arrays.asList(new Author(1, "sai"), new Author(2, "charan"));
@@ -84,6 +84,30 @@ public class TestAuthorController {
         assertEquals(expectedAuthors, response.getBody(), "Should be all expected authors");
         assertEquals(HttpStatus.OK, response.getStatusCode(), "Should be ok status code");
         assertEquals(expectedAuthors.size(), response.getBody().size(), "Should be a valid size");
+    }
+    @Test
+    public void testGetAuthorByName_success(){
+        AuthorService authorServiceMoc = mock(AuthorService.class);
+        Author author = new Author(1,"sai");
+        when(authorServiceMoc.findAuthorByName("sai")).thenReturn(author);
+        AuthorController authorController = new AuthorController(authorServiceMoc);
+
+        ResponseEntity<Author> response = authorController.getAuthorByName("sai");
+
+        assertEquals(1,response.getBody().getId(),"Should return valid id");
+        assertEquals(HttpStatus.OK,response.getStatusCode(),"Should return ok Http Status code");
+    }
+    @Test
+    public void testGetAuthorByName_failure(){
+        AuthorService authorServiceMoc = mock(AuthorService.class);
+        Author author = new Author(1,"sai");
+        when(authorServiceMoc.findAuthorByName("charan")).thenReturn(null);
+        AuthorController authorController = new AuthorController(authorServiceMoc);
+
+        ResponseEntity<Author> response = authorController.getAuthorByName("charan");
+
+        assertEquals(null,response.getBody(),"Should return null");
+        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode(),"Should return Not Found Http Status code");
     }
 
     @Test
@@ -163,31 +187,3 @@ public class TestAuthorController {
     }
 }
 
-//    @Test
-//    public void testDeleteAuthorReturnsNotFoundStatusCode(){
-//        AuthorRepo authorRepo = new AuthorRepo();
-//        AuthorService authorService = new AuthorService(authorRepo);
-//        AuthorController authorController = new AuthorController(authorService);
-//        authorController.postAuthor(new Author("sai","A1"));
-//        ResponseEntity<Boolean> response = authorController.deleteAuthor("A2");
-//        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
-//    }
-//   @Test
-//    public void testDeleteAuthorReturnsTrue(){
-//        AuthorRepo authorRepo = new AuthorRepo();
-//        AuthorService authorService = new AuthorService(authorRepo);
-//        AuthorController authorController = new AuthorController(authorService);
-//        authorController.postAuthor(new Author("sai","A1"));
-//        ResponseEntity<Boolean> response = authorController.deleteAuthor("A1");
-//        assertEquals(true,response.getBody());
-//    }
-//    @Test
-//    public void testDeleteAuthorReturnsFalse(){
-//        AuthorRepo authorRepo = new AuthorRepo();
-//        AuthorService authorService = new AuthorService(authorRepo);
-//        AuthorController authorController = new AuthorController(authorService);
-//        authorController.postAuthor(new Author("sai","A1"));
-//        ResponseEntity<Boolean> response = authorController.deleteAuthor("A2");
-//        assertEquals(false,response.getBody());
-//    }
-//}

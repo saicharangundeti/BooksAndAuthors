@@ -3,199 +3,194 @@ package com.BooksAndAuthorsManagement.Controller;
 import com.BooksAndAuthorsManagement.Service.BookService;
 import com.BooksAndAuthorsManagement.controller.BookController;
 import com.BooksAndAuthorsManagement.model.Book;
-import com.BooksAndAuthorsManagement.repo.BookRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import java.util.ArrayList;
-//import static org.junit.jupiter.api.Assertions.*;
-//
-//public class TestBookController {
-//    @Test
-//    public void testGetABookReturnsOkStatus(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.getABook("B1");
-//        assertEquals(HttpStatus.OK,response.getStatusCode());
-//
-//    }
-//    @Test
-//    public void testGetABookReturnsNotFoundStatus(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.getABook("B2");
-//        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
-//
-//    }
-//    @Test
-//    public void testGetABookReturnsValidBookName(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.getABook("B1");
-//        assertEquals("hell",response.getBody().getName());
-//    }
-//    @Test
-//    public void testGetABookReturnsNull(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.getABook("B2");
-//        assertNull(response.getBody());
-//    }
-//    @Test
-//    public void testGetAllBookReturnsOKStatus(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        bookController.postBook(new Book("heaven","B2",18,"A2"));
-//        ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks(null);
-//        assertEquals(HttpStatus.OK,response.getStatusCode());
-//
-//    }
-//    @Test
-//    public void testGetAllBookReturnsNotFoundStatus(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        bookController.postBook(new Book("heaven","B2",18,"A2"));
-//        ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks("Dark");
-//        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
-//    }
-//    @Test
-//    public void testGetAllBookReturnsValidSize(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        bookController.postBook(new Book("heaven","B2",18,"A2"));
-//        ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks(null);
-//        assertEquals(2,response.getBody().size());
-//    }
-//    @Test
-//    public void testGetAllBookReturnsInValidSize(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        bookController.postBook(new Book("heaven","B2",18,"A2"));
-//        ResponseEntity<ArrayList<Book>> response = bookController.getAllBooks("hell");
-//        assertNotEquals(2,response.getBody().size());
-//    }
-//    @Test
-//    public void testPostBookReturnsOkStatusCode(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        ResponseEntity<Book> response = bookController.postBook(new Book("hell","B1",20,"A1"));
-//        assertEquals(HttpStatus.OK,response.getStatusCode());
-//    }
-//    @Test
-//    public void testPostBookReturnsBadRequestStatusCode(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.postBook(new Book("heaven","B1",10,"A2"));
-//        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
-//    }
-//    @Test
-//    public void testPostBookReturnsValidName(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        ResponseEntity<Book> response = bookController.postBook(new Book("hell","B1",20,"A1"));
-//        assertEquals("hell",response.getBody().getName());
-//    }
-//    @Test
-//    public void testPostBookReturnsNull(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.postBook(new Book("heaven","B1",10,"A2"));
-//        assertNull(response.getBody());
-//    }
-//    @Test
-//    public void testUpdateBookReturnsOKStatusCode(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B1",10,"A2"));
-//        assertEquals(HttpStatus.OK,response.getStatusCode());
-//    }
-//    @Test
-//    public void testUpdateBookReturnsBadRequestStatusCode(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B2",10,"A2"));
-//        assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
-//    }
-//    @Test
-//    public void testUpdateBookReturnsValidName(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B1",10,"A2"));
-//        assertEquals("heaven",response.getBody().getName());
-//    }
-//    @Test
-//    public void testUpdateBookReturnsNull(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Book> response = bookController.updateBook(new Book("heaven","B2",10,"A2"));
-//        assertNull(response.getBody());
-//    }
-//
-//    @Test
-//    public void testDeleteBookReturnsOkStatusCode(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Boolean> response = bookController.deleteBook("B1");
-//        assertEquals(HttpStatus.OK,response.getStatusCode());
-//    }
-//    @Test
-//    public void testDeleteBookReturnsNotFoundStatusCode(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Boolean> response = bookController.deleteBook("B2");
-//        assertEquals(HttpStatus.NOT_FOUND,response.getStatusCode());
-//    }
-//    @Test
-//    public void testDeleteBookReturnsTrue(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Boolean> response = bookController.deleteBook("B1");
-//        assertEquals(true,response.getBody());
-//    }
-//    @Test
-//    public void testDeleteBookReturnsFalse(){
-//        BookRepo bookRepo = new BookRepo();
-//        BookService bookService = new BookService(bookRepo);
-//        BookController bookController = new BookController(bookService);
-//        bookController.postBook(new Book("hell","B1",20,"A1"));
-//        ResponseEntity<Boolean> response = bookController.deleteBook("B2");
-//        assertEquals(false,response.getBody());
-//    }
-//
-//}
+
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
+public class TestBookController {
+    @Test
+    public void testGetAllBooks() {
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book(1, "python", 200, Arrays.asList(1, 2, 3));
+        List<Book> books = Arrays.asList(book);
+        when(bookServiceMock.findAllBooks()).thenReturn(books);
+        BookController bookController = new BookController(bookServiceMock);
+
+        ResponseEntity<List<Book>> response = bookController.getAllBooks();
+
+        assertEquals(1, response.getBody().size(), "Should be correct size of Books");
+        assertEquals(HttpStatus.OK, response.getStatusCode(), "Should be ok http status code");
+    }
+
+    @Test
+    public void testGetBookById_Found() {
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book(1, "python", 200, Arrays.asList(1, 2, 3));
+        when(bookServiceMock.findBookById(anyInt())).thenReturn(book);
+        BookController bookController = new BookController(bookServiceMock);
+
+        ResponseEntity<Book> response = bookController.getBookById(2);
+
+        assertEquals("python", response.getBody().getName(), "Should be correct book name");
+        assertEquals(HttpStatus.OK, response.getStatusCode(), "Should be ok http status code");
+
+    }
+
+    @Test
+    public void testGetBookById_BookNotFound() {
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book(1, "python", 200, Arrays.asList(1, 2, 3));
+        when(bookServiceMock.findBookById(0)).thenReturn(null);
+        BookController bookController = new BookController(bookServiceMock);
+
+        ResponseEntity<Book> response = bookController.getBookById(0);
+
+        assertEquals(null, response.getBody(), "Should be null");
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(), "Should be Not Found http status code");
+
+    }
+
+    @Test
+    public void testGetBookByName_BookFound() {
+
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book(1,"Test Book",67,Arrays.asList(2,3,4));
+        String bookName = book.getName();
+        when(bookServiceMock.findBookByName(bookName)).thenReturn(book);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<Book> response = bookController.getBookByName(bookName);
+
+        // Assert
+        assertEquals(1, response.getBody().getId(), "Should be a valid book");
+        assertEquals(HttpStatus.OK, response.getStatusCode(), "Should be Ok  http status code");
+
+    }
+    @Test
+    public void testGetBookByName_NotFound(){
+
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book(1,"Test Book",67,Arrays.asList(2,3,4));
+        String bookName = book.getName();
+        when(bookServiceMock.findBookByName("book")).thenReturn(null);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<Book> response = bookController.getBookByName(bookName);
+
+        // Assert
+        assertEquals(null, response.getBody(), "Should be a valid book");
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(), "Should be Ok  http status code");
+
+    }
+    @Test
+    public void testPostBook_Success(){
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book();
+        book.setId(1);
+        book.setName("Test Book");
+
+        when(bookServiceMock.saveBook(book)).thenReturn(book);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<String> response = bookController.postBook(book);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode(),"Should be a ok http Status code");
+        assertEquals("successfully posted", response.getBody(),"Should be a successfully posted message");
+    }
+    @Test
+    public void testPostBook_Failure(){
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book();
+        book.setId(1);
+        book.setName("Test Book");
+
+        when(bookServiceMock.saveBook(book)).thenReturn(null);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<String> response = bookController.postBook(book);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(null, response.getBody());
+    }
+    @Test
+    public void testUpdateBook_Success(){
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book();
+        book.setId(1);
+        book.setName("Test Book");
+        when(bookServiceMock.findBookById(1)).thenReturn(book);
+        when(bookServiceMock.updateBook(1,book)).thenReturn(book);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<Book> response = bookController.updateBook(1,book);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode(),"Should be a ok http Status code");
+        assertEquals("Test Book", response.getBody().getName(),"Should be a correct book name");
+    }
+    @Test
+    public void testUpdateBook_Failure(){
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book();
+        book.setId(1);
+        book.setName("Test Book");
+        when(bookServiceMock.findBookById(0)).thenReturn(null);
+        when(bookServiceMock.updateBook(0,book)).thenReturn(null);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<Book> response = bookController.updateBook(0,book);
+
+        // Assert
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode(),"Should be a Bad Request http Status code");
+        assertEquals(null, response.getBody(),"Should be a correct book name");
+    }
+    @Test
+    public void testDeleteBook_Success(){
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book();
+        book.setId(1);
+        book.setName("Test Book");
+        when(bookServiceMock.deleteBook(1)).thenReturn(true);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<Boolean> response = bookController.deleteBook(1);
+
+        // Assert
+        assertEquals(HttpStatus.OK, response.getStatusCode(),"Should be a ok http Status code");
+        assertEquals(true, response.getBody(),"Should be true");
+    }
+    @Test
+    public void testDeleteBook_Failure(){
+        BookService bookServiceMock = mock(BookService.class);
+        Book book = new Book();
+        book.setId(1);
+        book.setName("Test Book");
+        when(bookServiceMock.deleteBook(0)).thenReturn(false);
+        BookController bookController = new BookController(bookServiceMock);
+
+        // Act
+        ResponseEntity<Boolean> response = bookController.deleteBook(0);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode(),"Should be Not Found http Status code");
+        assertEquals(false, response.getBody(),"Should be a false");
+    }
+}
+

@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.*;
 
 @RestController
-@RequestMapping("/v1/books")
+@RequestMapping("/v1")
 
 public class BookController {
 
@@ -23,13 +23,13 @@ public class BookController {
     public BookController(BookService bookService){
         this.bookService = bookService;
     }
-    @GetMapping("")
+    @GetMapping("/books")
     public ResponseEntity<List<Book>> getAllBooks(){
         return ResponseEntity.ok(bookService.findAllBooks());
     }
 
-    @GetMapping("/{bookId}")
-    public ResponseEntity<Book> getABook(@PathVariable int bookId){
+    @GetMapping("/books/{bookId}")
+    public ResponseEntity<Book> getBookById(@PathVariable int bookId){
         if(bookService.findBookById(bookId) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
@@ -37,42 +37,43 @@ public class BookController {
     }
 
 
-//    @GetMapping
-//    public ResponseEntity<ArrayList<Book>> getAllBooks(@RequestParam(value = "bookName", required = false) String bookName) {
-//        if (bookName == null || bookName.equals("")) {
-//            return ResponseEntity.ok(bookService.findAllBooks());
-//        } else if(bookService.findAllBooksByName(bookName).size() > 0){
-//            return ResponseEntity.ok(bookService.findAllBooksByName(bookName));
-//        }
-//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-//    }
+    @GetMapping("/books/bookByName")
+    public ResponseEntity<Book> getBookByName(@RequestParam(value = "bookName", required = false) String bookName) {
+
+        if(bookService.findBookByName(bookName) == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        Book book = bookService.findBookByName(bookName);
+        return ResponseEntity.ok(book);
+
+    }
 
 
-    @PostMapping("")
+    @PostMapping("/books")
     public ResponseEntity<String> postBook(@Valid  @RequestBody Book book) {
         try {
             if (bookService.saveBook(book) == null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-            URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                    .path("/{id}").buildAndExpand(book.getId()).toUri();
-            return ResponseEntity.created(location).build();
+            return ResponseEntity.ok("successfully posted");
         } catch (CustomSQLExceptions e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
 
-    @PutMapping("/{bookId}")
+    @PutMapping("/books/{bookId}")
     public ResponseEntity<Book> updateBook(@PathVariable int bookId,@RequestBody Book book){
-        if(bookService.findBookById(bookId) != null )
-            return ResponseEntity.ok(bookService.updateBook(bookId,book));
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-
+        if(bookService.findBookById(bookId) == null ) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+        Book updatedBook = bookService.updateBook(bookId, book);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedBook);
 
     }
 
 
-    @DeleteMapping("/{bookId}")
+    @DeleteMapping("/books/{bookId}")
     public ResponseEntity<Boolean> deleteBook(@PathVariable int bookId){
         if(bookService.deleteBook(bookId)){
             return ResponseEntity.ok(true);

@@ -34,6 +34,14 @@ public class BookService {
         book.setAuthors(relationRepo.getAuthorId(id));
         return book;
     }
+    public Book findBookByName( String name){
+        if(bookRepo.getBookByName(name) == null){
+            return null;
+        }
+        Book book = bookRepo.getBookByName(name);
+        book.setAuthors(relationRepo.getAuthorId(book.getId()));
+        return book;
+    }
     public Book saveBook(Book book){
         boolean isExistBookId = true;
         for(int bookId : book.getAuthorIds()){
