@@ -20,7 +20,7 @@ public class AuthorService {
      public Author findAuthorByName(String name){
         return authorRepo.getAuthorByName(name);
     }
-    public Author getAuthorById(int id)
+    public Author findAuthorById(int id)
     {
         if(authorRepo.getAuthorById(id) != null){
             return authorRepo.getAuthorById(id);
@@ -29,7 +29,7 @@ public class AuthorService {
     }
     public Author saveAuthor(Author author)
     {
-        if(authorRepo.getAuthorByName(author.getName()) == null ) {
+        if(authorRepo.getAuthorByName(author.getName()) == null) {
             authorRepo.saveAuthor(author);
             return author;
         }

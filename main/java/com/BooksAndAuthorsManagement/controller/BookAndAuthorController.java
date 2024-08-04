@@ -28,14 +28,10 @@ public class BookAndAuthorController {
 
     @GetMapping("/{bookId}")
     public ResponseEntity<BookAndAuthor> getBookDetails(@PathVariable int bookId){
-        long startTime = System.currentTimeMillis();
         if(bookAndAuthorService.getBookDetails(bookId) == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         BookAndAuthor bookAndAuthor = bookAndAuthorService.getBookDetails(bookId);
-        long endTime = System.currentTimeMillis();
-        System.out.println("Total time");
-        System.out.println(endTime-startTime);
         return ResponseEntity.ok(bookAndAuthor);
 
     }

@@ -45,7 +45,7 @@ public class BookService {
     public Book saveBook(Book book){
         boolean isExistBookId = true;
         for(int bookId : book.getAuthorIds()){
-            if(authorService.getAuthorById(bookId) == null){
+            if(authorService.findAuthorById(bookId) == null){
                 isExistBookId = false;
             }
         }

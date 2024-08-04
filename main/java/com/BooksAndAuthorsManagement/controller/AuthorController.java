@@ -2,13 +2,10 @@ package com.BooksAndAuthorsManagement.controller;
 import com.BooksAndAuthorsManagement.Service.AuthorService;
 import com.BooksAndAuthorsManagement.model.Author;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.*;
 
 @RestController
@@ -26,7 +23,7 @@ public class AuthorController {
 
     @GetMapping("/authors/{authorId}")
     public ResponseEntity<Author> getAnAuthor(@PathVariable int authorId){
-        Author author = authorService.getAuthorById(authorId);
+        Author author = authorService.findAuthorById(authorId);
         if(author == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         return ResponseEntity.ok(author);
     }

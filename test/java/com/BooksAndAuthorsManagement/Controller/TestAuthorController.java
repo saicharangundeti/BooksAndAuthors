@@ -20,11 +20,11 @@ import static org.mockito.Mockito.when;
 
 public class TestAuthorController {
     @Test
-    public void testGetAuthorByIdReturnsOkStatusCode() {
+    public void testGetAuthorById_OkStatusCode() {
 
         // Prepare
         AuthorService authorServiceMoc = mock(AuthorService.class);
-        when(authorServiceMoc.getAuthorById(anyInt())).thenReturn(new Author(1, "charan"));
+        when(authorServiceMoc.findAuthorById(anyInt())).thenReturn(new Author(1, "charan"));
         AuthorController authorController = new AuthorController(authorServiceMoc);
 
         // Test
@@ -35,10 +35,10 @@ public class TestAuthorController {
     }
 
     @Test
-    public void testGetAnAuthorByIdReturnsNotFoundStatusCode() {
+    public void testGetAnAuthorById_NotFoundStatusCode() {
         //preparation
         AuthorService authorServiceMoc = mock(AuthorService.class);
-        when(authorServiceMoc.getAuthorById(1)).thenReturn(new Author(1, "charan"));
+        when(authorServiceMoc.findAuthorById(1)).thenReturn(new Author(1, "charan"));
         AuthorController authorController = new AuthorController(authorServiceMoc);
 
         //Test
@@ -49,10 +49,10 @@ public class TestAuthorController {
     }
 
     @Test
-    public void testGetAnAuthorByIdReturnsValidAuthor() {
+    public void testGetAnAuthorById_AuthorFound() {
 
         AuthorService authorServiceMoc = mock(AuthorService.class);
-        when(authorServiceMoc.getAuthorById(1)).thenReturn(new Author(1, "charan"));
+        when(authorServiceMoc.findAuthorById(1)).thenReturn(new Author(1, "charan"));
         AuthorController authorController = new AuthorController(authorServiceMoc);
 
         ResponseEntity<Author> response = authorController.getAnAuthor(1);
@@ -61,9 +61,9 @@ public class TestAuthorController {
     }
 
     @Test
-    public void testGetAnAuthorByIdReturnsNull() {
+    public void testGetAnAuthorById_AuthorNotFound() {
         AuthorService authorServiceMoc = mock(AuthorService.class);
-        when(authorServiceMoc.getAuthorById(2)).thenReturn(null);
+        when(authorServiceMoc.findAuthorById(2)).thenReturn(null);
         AuthorController authorController = new AuthorController(authorServiceMoc);
 
         ResponseEntity<Author> response = authorController.getAnAuthor(2);
@@ -86,7 +86,7 @@ public class TestAuthorController {
         assertEquals(expectedAuthors.size(), response.getBody().size(), "Should be a valid size");
     }
     @Test
-    public void testGetAuthorByName_success(){
+    public void testGetAuthorByName_AuthorFound(){
         AuthorService authorServiceMoc = mock(AuthorService.class);
         Author author = new Author(1,"sai");
         when(authorServiceMoc.findAuthorByName("sai")).thenReturn(author);
@@ -98,7 +98,7 @@ public class TestAuthorController {
         assertEquals(HttpStatus.OK,response.getStatusCode(),"Should return ok Http Status code");
     }
     @Test
-    public void testGetAuthorByName_failure(){
+    public void testGetAuthorByName_AuthorNotFound(){
         AuthorService authorServiceMoc = mock(AuthorService.class);
         Author author = new Author(1,"sai");
         when(authorServiceMoc.findAuthorByName("charan")).thenReturn(null);
@@ -124,7 +124,7 @@ public class TestAuthorController {
     }
 
     @Test
-    public void testPostAuthor_failure() {
+    public void testPostAuthor_Failure() {
         AuthorService authorServiceMoc = mock(AuthorService.class);
         Author author = new Author(1, "sai");
         when(authorServiceMoc.saveAuthor(any(Author.class))).thenReturn(null);
