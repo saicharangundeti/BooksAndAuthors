@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -19,7 +20,7 @@ public class TestBookController {
     @Test
     public void testGetAllBooks() {
         BookService bookServiceMock = mock(BookService.class);
-        Book book = new Book(1, "python", 200, Arrays.asList(1, 2, 3));
+        Book book = new Book(1, "python", 200, Set.of(1, 2, 3));
         List<Book> books = Arrays.asList(book);
         when(bookServiceMock.findAllBooks()).thenReturn(books);
         BookController bookController = new BookController(bookServiceMock);
@@ -33,7 +34,7 @@ public class TestBookController {
     @Test
     public void testGetBookById_Found() {
         BookService bookServiceMock = mock(BookService.class);
-        Book book = new Book(1, "python", 200, Arrays.asList(1, 2, 3));
+        Book book = new Book(1, "python", 200, Set.of(1, 2, 3));
         when(bookServiceMock.findBookById(anyInt())).thenReturn(book);
         BookController bookController = new BookController(bookServiceMock);
 
@@ -47,7 +48,7 @@ public class TestBookController {
     @Test
     public void testGetBookById_BookNotFound() {
         BookService bookServiceMock = mock(BookService.class);
-        Book book = new Book(1, "python", 200, Arrays.asList(1, 2, 3));
+        Book book = new Book(1, "python", 200, Set.of(1, 2, 3));
         when(bookServiceMock.findBookById(0)).thenReturn(null);
         BookController bookController = new BookController(bookServiceMock);
 
@@ -62,7 +63,7 @@ public class TestBookController {
     public void testGetBookByName_BookFound() {
 
         BookService bookServiceMock = mock(BookService.class);
-        Book book = new Book(1,"Test Book",67,Arrays.asList(2,3,4));
+        Book book = new Book(1,"Test Book",67,Set.of(2,3,4));
         String bookName = book.getName();
         when(bookServiceMock.findBookByName(bookName)).thenReturn(book);
         BookController bookController = new BookController(bookServiceMock);
@@ -79,7 +80,7 @@ public class TestBookController {
     public void testGetBookByName_NotFound(){
 
         BookService bookServiceMock = mock(BookService.class);
-        Book book = new Book(1,"Test Book",67,Arrays.asList(2,3,4));
+        Book book = new Book(1,"Test Book",67,Set.of(2,3,4));
         String bookName = book.getName();
         when(bookServiceMock.findBookByName("book")).thenReturn(null);
         BookController bookController = new BookController(bookServiceMock);

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -26,7 +27,7 @@ public class TestBookAndAuthorsController {
         BookAndAuthorService bookAndAuthorServiceMock = mock(BookAndAuthorService.class);
         BookAndAuthor bookAndAuthor = new BookAndAuthor();
         bookAndAuthor.setBookId(1);
-        bookAndAuthor.setAuthors(Arrays.asList(author1,author2));
+        bookAndAuthor.setAuthors(Set.of(author1,author2));
 
         when(bookAndAuthorServiceMock.getBookDetails(anyInt())).thenReturn(bookAndAuthor);
         BookAndAuthorController bookAndAuthorController =  new BookAndAuthorController(bookAndAuthorServiceMock);
@@ -46,7 +47,7 @@ public class TestBookAndAuthorsController {
         BookAndAuthorService bookAndAuthorServiceMock = mock(BookAndAuthorService.class);
         BookAndAuthor bookAndAuthor = new BookAndAuthor();
         bookAndAuthor.setBookId(1);
-        bookAndAuthor.setAuthors(Arrays.asList(author1,author2));
+        bookAndAuthor.setAuthors(Set.of(author1,author2));
 
         when(bookAndAuthorServiceMock.getBookDetails(0)).thenReturn(null);
         BookAndAuthorController bookAndAuthorController =  new BookAndAuthorController(bookAndAuthorServiceMock);
