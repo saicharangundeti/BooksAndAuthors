@@ -5,36 +5,39 @@ import com.BooksAndAuthorsManagement.model.Book;
 import com.BooksAndAuthorsManagement.model.BookAndAuthor;
 import com.BooksAndAuthorsManagement.repo.AuthorRepo;
 import com.BooksAndAuthorsManagement.repo.BookRepo;
-import com.BooksAndAuthorsManagement.repo.RelationRepo;
+import com.BooksAndAuthorsManagement.Service.RelationService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 
 public class BookAndAuthorService {
-    private BookRepo bookRepo;
-    private AuthorRepo authorRepo;
-    private RelationRepo relationRepo;
+    private BookService bookService;
     private AuthorService authorService;
-    public BookAndAuthorService(BookRepo bookRepo, AuthorRepo authorRepo,RelationRepo relationRepo){
-        this.authorRepo = authorRepo;
-        this.bookRepo=bookRepo;
-        this.relationRepo = relationRepo;
+    private RelationService relationService;
+    public BookAndAuthorService(BookService bookService, AuthorService authorService, RelationService relationService){
+        this.bookService = bookService;
+        this.authorService = authorService;
+        this.relationService =  relationService;
     }
     public BookAndAuthor getBookDetails(int bookId){
-        BookService bookService = new BookService(bookRepo,relationRepo,authorService);
-        if(bookService.findBookById(bookId) == null) {
+        Book book = bookService.findBookById(bookId);
+        if(book == null) {
             return null;
         }
         BookAndAuthor bookAndAuthor = new BookAndAuthor();
-        Book book = bookRepo.getBookById(bookId);
-        List<Integer> authorIds = relationRepo.getAuthorId(bookId);
+        Set<Integer> authorIds = relationService.findAuthorIds(bookId);
         book.setAuthors(authorIds);
-        List<Author> authors = new ArrayList<>();
-        for(int id : authorIds){
-            authors.add(authorRepo.getAuthorById(id));
+        Set<Author> authors = new HashSet<>();
+        for(int id : authorIds.stream().toList()){
+            Author author = authorService.findAuthorById(id);
+            if(author != null) {
+                authors.add(author);
+            }
         }
         bookAndAuthor.setBookId(bookId);
         bookAndAuthor.setBookName(book.getName());

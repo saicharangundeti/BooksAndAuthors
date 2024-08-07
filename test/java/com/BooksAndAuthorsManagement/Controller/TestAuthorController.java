@@ -75,7 +75,8 @@ public class TestAuthorController {
     public void testGetAllAuthors_success() {
 
         AuthorService authorServiceMoc = mock(AuthorService.class);
-        List<Author> expectedAuthors = Arrays.asList(new Author(1, "sai"), new Author(2, "charan"));
+        Author author = new Author(1, "sai");
+        List<Author> expectedAuthors = Arrays.asList(author, new Author(2, "charan"));
         when(authorServiceMoc.findAllAuthors()).thenReturn(expectedAuthors);
         AuthorController authorController = new AuthorController(authorServiceMoc);
 

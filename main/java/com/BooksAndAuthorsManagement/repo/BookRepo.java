@@ -45,17 +45,7 @@ public class BookRepo {
             throw new CustomSQLExceptions(e.getMessage());
         }
     }
-    public int saveBookIdAndAuthorIdIntoRelation(Book book){
-        int count1 = 0;
-        int bookId = getBookByName(book.getName()).getId();
-        for(int i : book.getAuthorIds()) {
-            String query1 = "INSERT INTO author_book_relation(author_id,book_id) values (?,?)";
-            jdbcTemplate.update(query1, i, bookId);
-            count1++;
-        }
-        return count1;
 
-    }
 
     public Book getBookByName(String name){
         String query1 = "SELECT * FROM books WHERE name = ?";

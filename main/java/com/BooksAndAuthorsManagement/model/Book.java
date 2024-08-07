@@ -4,28 +4,29 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.List;
+import java.util.Set;
 
 public class Book {
     private int id;
     @Size(min=2)
     private  String name;
     @NotNull
-    private List<Integer> authorIds;
+    private Set<Integer> authorIds;
     private int numberOfPages;
     public Book(){}
 
-    public Book(int id,String name,int numberOfPages,List<Integer> authorIds) {
+    public Book(int id,String name,int numberOfPages,Set<Integer> authorIds) {
         this.id = id;
         this.name=name;
         this.numberOfPages = numberOfPages;
         this.authorIds = authorIds;
 
     }
-    public List<Integer> getAuthorIds() {
+    public Set<Integer> getAuthorIds() {
         return authorIds;
     }
 
-    public void setAuthors(List<Integer> authorIds) {
+    public void setAuthors(Set<Integer> authorIds) {
         this.authorIds = authorIds;
     }
 

@@ -2,27 +2,28 @@ package com.BooksAndAuthorsManagement.Service;
 
 import com.BooksAndAuthorsManagement.model.Book;
 import com.BooksAndAuthorsManagement.repo.BookRepo;
-import com.BooksAndAuthorsManagement.repo.RelationRepo;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 
 @Service
 public class BookService {
     private  BookRepo bookRepo;
-    private  RelationRepo relationRepo;
+    private  RelationService relationService;
     private AuthorService authorService;
 
-    public BookService(BookRepo bookRepo, RelationRepo relationRepo,AuthorService authorService){
+    public BookService(BookRepo bookRepo, RelationService relationRepo,AuthorService authorService){
         this.bookRepo = bookRepo;
-        this.relationRepo = relationRepo;
+        this.relationService = relationRepo;
         this.authorService = authorService;
     }
     public List<Book> findAllBooks(){
         List<Book> books = bookRepo.findAllBooks();
         for(Book book : books){
-            book.setAuthors(relationRepo.getAuthorId(book.getId()));
+            book.setAuthors(relationService.findAuthorIds(book.getId()));
         }
         return books;
     }
@@ -31,7 +32,7 @@ public class BookService {
             return null;
         }
         Book book = bookRepo.getBookById(id);
-        book.setAuthors(relationRepo.getAuthorId(id));
+        book.setAuthors(relationService.findAuthorIds(id));
         return book;
     }
     public Book findBookByName( String name){
@@ -39,28 +40,27 @@ public class BookService {
             return null;
         }
         Book book = bookRepo.getBookByName(name);
-        book.setAuthors(relationRepo.getAuthorId(book.getId()));
+        book.setAuthors(relationService.findAuthorIds(book.getId()));
         return book;
     }
-    public Book saveBook(Book book){
-        boolean isExistBookId = true;
-        for(int bookId : book.getAuthorIds()){
-            if(authorService.findAuthorById(bookId) == null){
-                isExistBookId = false;
-            }
-        }
-        if(bookRepo.getBookByName(book.getName()) == null){
-            if(isExistBookId) {
-                bookRepo.saveBook(book);
-                bookRepo.saveBookIdAndAuthorIdIntoRelation(book);
-                book.setAuthors(relationRepo.getAuthorId(book.getId()));
-                return book;
-            }
+    public Book saveBook(Book book) {
+        if (bookRepo.getBookByName(book.getName()) != null) {
             return null;
         }
-        else if(isExistBookId) {
-            bookRepo.saveBookIdAndAuthorIdIntoRelation(book);
-            book.setAuthors(relationRepo.getAuthorId(book.getId()));
+        boolean isAuthorIdExist = true;
+        for (int id : book.getAuthorIds()) {
+            if (authorService.findAuthorById(id) == null) {
+                isAuthorIdExist = false;
+            }
+        }
+        if (isAuthorIdExist) {
+            bookRepo.saveBook(book);
+            Book savedBook = bookRepo.getBookByName(book.getName());
+            if (savedBook != null) {
+                int bookId = savedBook.getId();
+                relationService.saveBookIdAndAuthorIds(bookId, book.getAuthorIds());
+            }
+            return book;
         }
         return null;
     }
@@ -69,9 +69,9 @@ public class BookService {
            return null;
        }
        bookRepo.updateBook(id,book);
-       relationRepo.removeBookAndAuthor(id);
-       relationRepo.updateBookIdAndAuthorId(id,book.getAuthorIds());
-       book.setAuthors(relationRepo.getAuthorId(id));
+       relationService.deleteBookAndAuthor(id);
+       relationService.saveBookIdAndAuthorIds(id,book.getAuthorIds());
+       book.setAuthors(relationService.findAuthorIds(id));
        book.setId(id);
        return book;
 
@@ -81,7 +81,7 @@ public class BookService {
             return false;
         }
         bookRepo.removeBook(id);
-        relationRepo.removeBookAndAuthor(id);
+        relationService.deleteBookAndAuthor(id);
         return true;
 
     }

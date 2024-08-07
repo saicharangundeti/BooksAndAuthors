@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Repository
@@ -24,9 +27,11 @@ public class RelationRepo {
     }
     public Set<Integer> getAuthorIds(int id){
         String query1 = "Select author_id from author_book_relation where book_id = ?";
-        return (Set<Integer>) jdbcTemplate.query(query1,new RelationMapper(),id);
+        List<Integer> ids = jdbcTemplate.query(query1,new RelationMapper(),id);
+        Set<Integer> authorIds = new HashSet<Integer>(ids);
+        return authorIds;
     }
-    public  int updateBookIdAndAuthorId(int id, Set<Integer> authorIds){
+    public  int saveBookIdAndAuthorIds(int id, Set<Integer> authorIds){
         int count = 0;
         for(int authorId:authorIds) {
             String query1 = "INSERT INTO author_book_relation(author_id,book_id) values (?,?)";

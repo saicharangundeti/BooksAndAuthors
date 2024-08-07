@@ -3,15 +3,16 @@ package com.BooksAndAuthorsManagement.model;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Set;
 
 public class BookAndAuthor {
     private int bookId;
     private String bookName;
     private int numberOfPages;
-    List<Author> authors ;
+    private Set<Author> authors ;
     public BookAndAuthor(){}
 
-    public BookAndAuthor(int bookId, String bookName, int numberOfPages, List<Author> authors) {
+    public BookAndAuthor(int bookId, String bookName, int numberOfPages, Set<Author> authors) {
         this.bookId = bookId;
         this.bookName = bookName;
         this.numberOfPages = numberOfPages;
@@ -30,7 +31,7 @@ public class BookAndAuthor {
         return numberOfPages;
     }
 
-    public List<Author> getAuthors() {
+    public Set<Author> getAuthors() {
         return authors;
     }
 
@@ -46,7 +47,7 @@ public class BookAndAuthor {
         this.numberOfPages = numberOfPages;
     }
 
-    public void setAuthors(List<Author> authors) {
+    public void setAuthors(Set<Author> authors) {
         this.authors = authors;
     }
 
